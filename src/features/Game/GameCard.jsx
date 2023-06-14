@@ -1,27 +1,33 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
 
-const GameCard = () => {
+import { useState } from "react";
+import { Link } from "react-router-dom";
+const GameCard = ({ game }) => {
   const [value, setValue] = useState(GameCard);
   //   if in basket show market
+  const {
+    released,
+    name,
+    background_image,
+    slug,
+    id,
+    rating,
+    platforms: {
+      platform: { name: platformName },
+    },
+  } = game;
 
   return (
     <>
-      <div>
-        <div>
-          <img />
-        </div>
-
-        <div>
-          <h3>title</h3>
-          <p>developer</p>
-          <p>release date</p>
-          <p>[platform]</p>
-        </div>
-        <div>
-          <p>Rating</p>
-          <p>Ranking</p>
-        </div>
-      </div>
+      <article>
+        <Link to={"/"}>
+          <h3>{name}</h3>
+          <p>Released {released}</p>
+          <img src={background_image} alt={name} />
+          <p>{platformName}</p>
+          <p>{rating}</p>
+        </Link>
+      </article>
     </>
   );
 };

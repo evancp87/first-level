@@ -5,7 +5,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 
 const GameDetail = () => {
   const [value, setValue] = useState(GameDetail);
-  const { id } = useParams();
+  const { slug } = useParams();
   // Hero image, rating, back button, sub nav- with ratings icon, bookmark, title, released, description, screenshots, tailer
 
   //   if in basket show market
