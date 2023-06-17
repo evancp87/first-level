@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 const GameCard = ({ game }) => {
-  const [value, setValue] = useState(GameCard);
   //   if in basket show market
   const {
     released,
@@ -20,7 +19,7 @@ const GameCard = ({ game }) => {
   return (
     <>
       <article>
-        <Link to={"/"}>
+        <Link to={`/game/${slug}`}>
           <h3>{name}</h3>
           <p>Released {released}</p>
           <img src={background_image} alt={name} />

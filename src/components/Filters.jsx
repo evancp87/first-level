@@ -1,11 +1,11 @@
 import { useState } from "react";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Filters = () => {
-  const [value, setValue] = useState(Filters);
-
   return (
     <>
+      <FontAwesomeIcon icon="fa-solid fa-arrow-up-a-z" />
+      <FontAwesomeIcon icon="fa-solid fa-arrow-down-z-a" />
       <select>
         <option value=""></option>
         <option value="Asc">Asc</option>

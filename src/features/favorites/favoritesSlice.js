@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  games: [],
+  savedGames: [],
 };
 
-export const controlsSlice = createSlice({
+export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
@@ -20,9 +20,9 @@ export const controlsSlice = createSlice({
   },
 });
 
-export const { search, sort, reset } = controlsSlice.actions;
+export const { search, sort, reset } = favoritesSlice.actions;
 
 export const selectSearch = (state) => state.controls.searchInput;
 export const selectSort = (state) => state.controls.sortInput;
 
-export default controlsSlice.reducer;
+export default favoritesSlice.reducer;

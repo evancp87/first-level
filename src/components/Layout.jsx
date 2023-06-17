@@ -1,9 +1,15 @@
 import { useState } from "react";
-
+import { Outlet } from "react-router-dom";
+import Nav from "./Nav";
 const Layout = () => {
-  const [value, setValue] = useState(Layout);
-
-  return <></>;
+  return (
+    <>
+      <Nav />
+      <main>
+        <Outlet />
+      </main>
+    </>
+  );
 };
 
 export default Layout;

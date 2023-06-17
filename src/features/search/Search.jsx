@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 const Search = () => {
-  const [value, setValue] = useState(Search);
-
   // searching and filtering-
   // https://stackoverflow.com/questions/69330756/search-and-filtering-multiple-values-react
   // https://www.freecodecamp.org/news/how-to-react-components/
