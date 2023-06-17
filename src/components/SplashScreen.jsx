@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const SplashScreen = () => {
-  const [value, setValue] = useState(SplashScreen);
+  // const [value, setValue] = useState(SplashScreen);
 
   return (
     <>

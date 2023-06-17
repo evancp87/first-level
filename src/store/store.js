@@ -1,11 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import counterReducer from "../features/counter/counterSlice";
-import characterReducer from "../src/features/character/characterSlice";
-import controlsReducer from "../src/features/controls/controlsSlice";
+// import gameReducer from "../features/Game/GameSlice";
+// import searchReducer from "../features/search/searchSlice";
+// import cartReducer from "../features/cart/cartSlice";
+// import favoritesReducer from "../features/favorites/favoritesSlice";
+import dashboardReducer from "../features/Dashboard/dashboardSlice";
+import logger from "redux-logger";
+
 export const store = configureStore({
   reducer: {
-    // counter: counterReducer,
-    character: characterReducer,
-    controls: controlsReducer,
+    // games: gameReducer,
+    // cart: cartReducer,
+    dashboard: dashboardReducer,
+    // favorites: favoritesReducer,
+    // search: searchReducer,
   },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(logger),
 });

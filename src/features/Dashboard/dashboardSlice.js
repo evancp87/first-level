@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import data from "../../utils/data";
+import { getGames } from "../../utils/data";
 
 const initialState = {
   games: [],
@@ -11,7 +11,7 @@ const initialState = {
 
 export const setGames = createAsyncThunk("games/setGames", async () => {
   try {
-    const response = await data.getGames();
+    const response = await getGames();
 
     // const data = response.data.map((element, index) => ({
     //   ...element,
@@ -54,10 +54,10 @@ export const dashboardSlice = createSlice({
     const releaseDateThreshold = new Date().setMonth(
       currentDate.getMonth() - 1
     );
-    const newestGames = releaseDateThreshold.slice(0, 10);
-    state.newlyReleasedGames = state.games.filter(
-      (game) => new Date(game.released_at) > newestGames
+    const newestGames = state.games.filter(
+      (game) => new Date(game.released_at) > releaseDateThreshold
     );
+    state.newlyReleasedGames = newestGames.slice(0, 10);
   },
   extraReducers: (builder) => {
     builder.addCase(setGames.fulfilled, (state, action) => {

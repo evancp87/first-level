@@ -1,9 +1,13 @@
 import { useState } from "react";
-
+import AllTimeBest from "./AllTimeBest";
+import FilteredList from "./FilteredList";
 const Dashboard = () => {
-  const [value, setValue] = useState(Dashboard);
-
-  return <></>;
+  return (
+    <>
+      <AllTimeBest />
+      <FilteredList />
+    </>
+  );
 };
 
 export default Dashboard;
