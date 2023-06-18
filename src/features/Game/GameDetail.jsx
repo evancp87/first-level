@@ -42,11 +42,13 @@ const GameDetail = () => {
   // Hero image, rating, back button, sub nav- with ratings icon, bookmark, title, released, description, screenshots, tailer
 
   //   if in basket show market
-  const platformNames = platforms.map((console) => console.platform.name);
+  const platformNames =
+    platforms && platforms.map((console) => console.platform.name);
   // console.log(platformNames);
 
-  const developerNames = developers.map((developer) => developer.name);
-  const genreNames = genres.map((genre) => genre.name);
+  const developerNames =
+    developers && developers.map((developer) => developer.name);
+  const genreNames = genres && genres.map((genre) => genre.name);
 
   return (
     <>
