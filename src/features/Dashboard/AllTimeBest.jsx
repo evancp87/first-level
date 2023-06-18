@@ -1,25 +1,15 @@
 import { useState, useEffect } from "react";
 import GameCard from "../Game/GameCard";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectReset,
-  selectSort,
-  selectNewlyReleased,
-  selectUpcoming,
-  selectHighestRated,
-  games,
-  sort,
-  reset,
-  newlyReleased,
-  upcoming,
-  filterHighestRated,
-} from "./dashboardSlice";
-
+import { selectHighestRated, filterHighestRated } from "./dashboardSlice";
 const AllTimeBest = () => {
-  // const dispatch = useDispatch();
-  const highestRated = useSelector(selectHighestRated);
-  console.log(highestRated);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(filterHighestRated());
+  }, [dispatch]);
+
+  const highestRated = useSelector(selectHighestRated);
   return (
     <>
       {highestRated &&

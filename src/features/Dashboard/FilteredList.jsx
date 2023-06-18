@@ -1,52 +1,74 @@
 import { useEffect } from "react";
 import FilteredGameCard from "./FilteredGameCard";
 import { useDispatch, useSelector } from "react-redux";
+import Filters from "../../components/Filters";
 import {
   selectReset,
   selectSort,
   selectNewlyReleased,
   selectUpcoming,
-  selectHighestRated,
-  games,
-  // sort,
-  // reset,
-  // newlyReleased,
-  // upcoming,
+  // games,
+  sort,
+  reset,
+  newlyReleased,
+  upcoming,
   // filterHighestRated,
 } from "./dashboardSlice";
 
+// TODO: make reusable and configurable
 const FilteredList = () => {
-  // const dispatch = useDispatch();
-  const sortlist = useSelector(selectSort);
+  const dispatch = useDispatch();
+  const sortValue = useSelector(selectSort);
   const resetList = useSelector(selectReset);
   const newReleases = useSelector(selectNewlyReleased);
   const upcomingGames = useSelector(selectUpcoming);
 
-  // useEffect(() => {
-  //   dispatch(upcoming), dispatch(newlyReleased);
-  // }, [dispatch]);
-  // const filteredList = () => {
-  //     let filteredList = [...games];
-  //
-  //     // sorting alphabetically ascending or descending
-  //     if (upcomingGames && upcomingGames  === "upcoming") {
-  //       filteredList.sort((numOne, numTwo) =>
-  //         numOne.character > numTwo.character ? 1 : -1
-  //       );
-  //     } else if (upcomingGames === "new releases") {
-  //       filteredList.sort((numOne, numTwo) =>
-  //         numOne.character > numTwo.character ? -1 : 1
-  //       );
-  //     }
+  useEffect(() => {
+    dispatch(upcoming), dispatch(newlyReleased);
+  }, [dispatch]);
 
-  //     return filteredList;
-  //   };
+  console.log(upcomingGames, newReleases);
+
+  const setFilteredGames = (e) => {
+    dispatch(sort(e.target.value));
+  };
+
+  const filteredList = () => {
+    let filteredList = [...upcoming];
+
+    // sorting between either
+    if (sortValue && sortValue === "Upcoming Games" && sortValue.length > 0) {
+      return filteredList;
+    } else if (sortValue && sortValue === "New Releases" && sortValue.length) {
+      filteredList = [...newReleases];
+    }
+
+    return filteredList;
+  };
+
+  const filteredGames = filteredList();
+
+  // const filterOptions = [
+  //   { label: "Upcoming Games", value: "upcoming" },
+  //   { label: "New Releases", value: "new_releases" },
+  // ];
+
   return (
     <>
-      <input />
+      {/* <Filters options={filterOptions} onInput={setFilteredGames} /> */}
+      <select onInput={setFilteredGames}>
+        <option>Upcoming Games</option>
+        <option>New Releases</option>
+      </select>
       <ul>
-        {games &&
-          games.map((game) => <FilteredGameCard key={game.id} game={game} />)}
+        {filteredGames.length === 0 ? (
+          <p>No results found</p>
+        ) : (
+          filteredGames &&
+          filteredGames.map((game) => (
+            <FilteredGameCard key={game.id} game={game} />
+          ))
+        )}
       </ul>
     </>
   );

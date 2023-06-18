@@ -48,16 +48,16 @@ export const dashboardSlice = createSlice({
         (game) => new Date(game.released_at) >= currentDate
       );
     },
-  },
-  newlyReleased: (state) => {
-    const currentDate = new Date();
-    const releaseDateThreshold = new Date().setMonth(
-      currentDate.getMonth() - 1
-    );
-    const newestGames = state.games.filter(
-      (game) => new Date(game.released_at) > releaseDateThreshold
-    );
-    state.newlyReleasedGames = newestGames.slice(0, 10);
+    newlyReleased: (state) => {
+      const currentDate = new Date();
+      const releaseDateThreshold = new Date().setMonth(
+        currentDate.getMonth() - 1
+      );
+      const newestGames = state.games.filter(
+        (game) => new Date(game.released_at) > releaseDateThreshold
+      );
+      state.newlyReleasedGames = newestGames.slice(0, 10);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(setGames.fulfilled, (state, action) => {
@@ -70,9 +70,9 @@ export const { sort, reset, newlyReleased, upcoming, filterHighestRated } =
   dashboardSlice.actions;
 
 export const selectReset = (state) => state.reset;
-export const selectSort = (state) => state.sort;
-export const selectNewlyReleased = (state) => state.newlyReleased;
-export const selectUpcoming = (state) => state.upcoming;
-export const selectHighestRated = (state) => state.filterHighestRated;
+export const selectSort = (state) => state.sortInput;
+export const selectNewlyReleased = (state) => state.newlyReleasedGames;
+export const selectUpcoming = (state) => state.upcomingGames;
+export const selectHighestRated = (state) => state.dashboard.allTimeBest;
 
 export default dashboardSlice.reducer;
