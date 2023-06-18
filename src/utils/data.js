@@ -1,4 +1,5 @@
-const api = "b27a148777114f578b36079d29688b34";
+const api = import.meta.env.API_KEY;
+
 import axios from "axios";
 // game data
 
@@ -26,10 +27,10 @@ export const getGenres = async () => {
 };
 
 // screenshots
-export const getScreenshots = async () => {
+export const getScreenshots = async (game_pk) => {
   try {
     const { data } = await axios.get(
-      `https://api.rawg.io/api/games/:game_pk/screenshots?key=${api}`
+      `https://api.rawg.io/api/games/${game_pk}/screenshots?key=${api}`
     );
     return data.results;
   } catch (error) {
@@ -39,10 +40,10 @@ export const getScreenshots = async () => {
 
 // links to stores that sell the game
 
-export const getLinksToStores = async () => {
+export const getLinksToStores = async (game_pk) => {
   try {
     const { data } = await axios.get(
-      ` https://api.rawg.io/api/games/:game_pk/stores?key=${api}`
+      ` https://api.rawg.io/api/games/${game_pk}/stores?key=${api}`
     );
     return data.results;
   } catch (error) {
@@ -52,10 +53,10 @@ export const getLinksToStores = async () => {
 
 // Get details of the game.
 
-export const getGameDetail = async () => {
+export const getGameDetail = async (slug) => {
   try {
     const { data } = await axios.get(
-      `https://api.rawg.io/api/games/:id?key=${api}`
+      `https://api.rawg.io/api/games/${slug}?key=${api}`
     );
     return data;
   } catch (error) {
@@ -65,10 +66,10 @@ export const getGameDetail = async () => {
 
 // Get a list of game trailers.
 
-export const getGameTrailers = async () => {
+export const getGameTrailers = async (slug) => {
   try {
     const { data } = await axios.get(
-      `https://api.rawg.io/api/games/:id/movies?key=${api}`
+      `https://api.rawg.io/api/games/${slug}/movies?key=${api}`
     );
     return data.results;
   } catch (error) {
