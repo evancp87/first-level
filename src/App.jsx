@@ -1,10 +1,10 @@
 import { useState, useCallback, useEffect, lazy, suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./App.css";
+// import "./App.css";
 // import "dist/output.css";
 import "../dist/output.css";
 import { Routes, Route, Outlet } from "react-router-dom";
-import Search from "./features/Search/Search";
+import Search from "./features/Dashboard/Search";
 import Favorites from "./features/Favorites/Favorites";
 import GameDetail from "./features/Game/GameDetail";
 // import Layout from "./components/Layout";

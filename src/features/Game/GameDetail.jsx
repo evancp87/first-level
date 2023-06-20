@@ -1,26 +1,33 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getGame } from "./GameSlice";
+import {
+  getGame,
+  getGameScreenshots,
+  getTrailers,
+  selectGameDetail,
+  selectScreenshots,
+  selectTrailers,
+} from "./GameSlice";
 import Hero from "../../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-import { selectGameDetail } from "./GameSlice";
-
 const GameDetail = () => {
   const dispatch = useDispatch();
   const game = useSelector(selectGameDetail);
+  const screenshots = useSelector(selectScreenshots);
+  const trailers = useSelector(selectTrailers);
 
   const { slug } = useParams();
 
-  // get slug off router params, dispatch action to store. slice takes in slug as parameter and makes api call using slug as string interpolation for endpoint,
-  const fetchGame = useCallback(
-    () => dispatch(getGame(slug)),
-    [dispatch, slug]
-  );
+  const fetchGame = useCallback(() => {
+    dispatch(getGame(slug));
+    dispatch(getGameScreenshots(slug));
+    dispatch(getTrailers(slug));
+  }, [dispatch, slug]);
 
   useEffect(() => {
     console.log("hello!");
@@ -31,20 +38,27 @@ const GameDetail = () => {
     released,
     name,
     background_image,
-    // slug,
-    // id,
     rating,
     platforms,
     genres,
     developers,
+    description,
   } = game;
+
+  // const {
+  //   data: { [480]: videoUrl, max: maxVideoUrl },
+  //   preview,
+  // } = trailers;
+
+  // console.log(videoUrl);
+
+  const videoUrl = trailers.length > 0 && trailers[0].data[480];
 
   // Hero image, rating, back button, sub nav- with ratings icon, bookmark, title, released, description, screenshots, tailer
 
   //   if in basket show market
   const platformNames =
     platforms && platforms.map((console) => console.platform.name);
-  // console.log(platformNames);
 
   const developerNames =
     developers && developers.map((developer) => developer.name);
@@ -53,17 +67,31 @@ const GameDetail = () => {
   return (
     <>
       <img src={background_image} alt={name} />
-      <p>{name}</p>
-      <p>{developerNames}</p>
-      <p>{released}</p>
-      <p>{platformNames}</p>
-      <p>{genreNames}</p>
-      <p>{rating}</p>
       <div>
         <FontAwesomeIcon icon={faCartPlus} />
         <FontAwesomeIcon icon={faCircleCheck} />
         <FontAwesomeIcon icon={faHeart} />
       </div>
+      <p>{name}</p>
+      <p>{developerNames}</p>
+      <p>{released}</p>
+      <p>{platformNames}</p>
+      <p>{genreNames}</p>
+      <p>{description}</p>
+
+      <p>{rating}</p>
+      <ul>
+        {screenshots &&
+          screenshots.map((screenshot, index) => (
+            <li key={screenshot.id}>
+              <img
+                src={screenshot.image}
+                alt={`${name} screenshot ${index} `}
+              />
+            </li>
+          ))}
+      </ul>
+      <video src={videoUrl}></video>
       <Hero />
     </>
   );

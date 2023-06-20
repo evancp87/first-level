@@ -1,28 +1,44 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  savedGames: [],
+  gameLikes: [],
+  deleteGame: {},
 };
 
 export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
-    search: (state, action) => {
-      state.searchInput = action.payload;
+    addToLikes: (state, action) => {
+      state.likes = [...state.likes, action.payload];
     },
-    sort: (state, action) => {
-      state.sortInput = action.payload;
+    getLikes: (state, action) => {
+      state.likes = action.payload;
     },
-    reset: () => {
-      return { ...initialState };
+    removeLike: (state, action) => {
+      const indexOf = state.simpsons.findIndex(
+        (item) => item.character === action.payload
+      );
+      console.log("the indexOf is:", indexOf);
+      state.simpsons.splice(indexOf, 1);
+    },
+
+    likes: (state, action) => {
+      const indexOfLike = state.games.findIndex(
+        (game) => game.id === action.payload
+      );
+      const updatedGame = {
+        ...state.games[indexOfLike],
+        liked: !state.games[indexOfLike].liked,
+      };
+      state.games[indexOfLike] = updatedGame;
     },
   },
 });
 
-export const { search, sort, reset } = favoritesSlice.actions;
+export const { addToLikes, getLikes, removeLikes } = favoritesSlice.actions;
 
-export const selectSearch = (state) => state.controls.searchInput;
-export const selectSort = (state) => state.controls.sortInput;
+export const selectLikes = (state) => state.gameLikes;
+export const selectLikeToRemove = (state) => state.deleteGame;
 
 export default favoritesSlice.reducer;

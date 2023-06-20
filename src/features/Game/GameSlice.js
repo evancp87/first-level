@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getGameDetail,
-  getGameTrailers,
   getScreenshots,
+  getGameTrailers,
 } from "../../utils/data";
+
 const initialState = {
   detail: {},
   screenshots: [],
-  trailer: {},
+  trailers: [],
 };
 
 export const getGame = createAsyncThunk("games/getGame", async (slug) => {
@@ -64,7 +65,7 @@ export const gameDetailsSlice = createSlice({
         state.detail = action.payload;
       })
       .addCase(getTrailers.fulfilled, (state, action) => {
-        state.trailer = action.payload;
+        state.trailers = action.payload;
       })
       .addCase(getGameScreenshots.fulfilled, (state, action) => {
         state.screenshots = action.payload;
@@ -75,7 +76,7 @@ export const gameDetailsSlice = createSlice({
 export const { search, sort, reset } = gameDetailsSlice.actions;
 
 export const selectGameDetail = (state) => state.games.detail;
-export const selectScreenshots = (state) => state.games.detail;
-export const selectTrailers = (state) => state.games.detail;
+export const selectScreenshots = (state) => state.games.screenshots;
+export const selectTrailers = (state) => state.games.trailers;
 
 export default gameDetailsSlice.reducer;

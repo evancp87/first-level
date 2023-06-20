@@ -1,8 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import gameReducer from "../features/Game/GameSlice";
-// import searchReducer from "../features/search/searchSlice";
 // import cartReducer from "../features/cart/cartSlice";
-// import favoritesReducer from "../features/favorites/favoritesSlice";
+import favoritesReducer from "../features/favorites/favoritesSlice";
 import dashboardReducer from "../features/Dashboard/dashboardSlice";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
@@ -11,8 +10,7 @@ export const store = configureStore({
     games: gameReducer,
     // cart: cartReducer,
     dashboard: dashboardReducer,
-    // favorites: favoritesReducer,
-    // search: searchReducer,
+    favorites: favoritesReducer,
   },
   middleware: [thunk, logger],
   // middleware: (getDefaultMiddleware) =>
