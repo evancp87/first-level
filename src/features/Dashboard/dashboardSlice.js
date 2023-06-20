@@ -88,6 +88,11 @@ export const dashboardSlice = createSlice({
         liked: !state.games[indexOfLike].liked,
       };
       state.games[indexOfLike] = updatedGame;
+
+      //   to ensure that the changes are reflected in different components
+      const highest = state.games.filter((game) => game.rating >= 4.5);
+      const topTen = highest.slice(0, 10);
+      state.allTimeBest = topTen;
     },
 
     rating: (state, action) => {
