@@ -14,6 +14,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
+import Skeleton from "react-loading-skeleton";
 
 const GameDetail = () => {
   const dispatch = useDispatch();
@@ -43,6 +46,14 @@ const GameDetail = () => {
     genres,
     developers,
     description,
+    // rating: {
+    //   ratings: [
+    //     { id: ratingId },
+    //     { title: ratingTitle },
+    //     { count: ratingCount },
+    //     { percent: ratingPercent },
+    //   ],
+    // },
   } = game;
 
   // const {
@@ -71,6 +82,8 @@ const GameDetail = () => {
         <FontAwesomeIcon icon={faCartPlus} />
         <FontAwesomeIcon icon={faCircleCheck} />
         <FontAwesomeIcon icon={faHeart} />
+        <FontAwesomeIcon icon={faThumbsUp} flip="horizontal" />
+        <FontAwesomeIcon icon={faThumbsDown} />
       </div>
       <p>{name}</p>
       <p>{developerNames}</p>
@@ -91,8 +104,13 @@ const GameDetail = () => {
             </li>
           ))}
       </ul>
-      <video src={videoUrl}></video>
-      <Hero />
+
+      {/* only show a trailer if the game page has a trailer */}
+      {videoUrl && (
+        <video controls>
+          <source src={videoUrl} type="video/mp4"></source>
+        </video>
+      )}
     </>
   );
 };
