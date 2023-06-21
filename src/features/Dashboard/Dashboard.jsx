@@ -6,9 +6,6 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   return (
     <>
-      <Link to="/search">
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
-      </Link>
       <AllTimeBest />
       {/* <FilteredList /> */}
     </>
