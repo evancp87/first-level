@@ -13,7 +13,9 @@ const AllTimeBest = () => {
   return (
     <>
       {highestRated &&
-        highestRated.map((game) => <GameCard key={game.id} game={game} />)}
+        highestRated.map((game) => (
+          <GameCard key={game.id} game={game} liked={game.liked} />
+        ))}
     </>
   );
 };
