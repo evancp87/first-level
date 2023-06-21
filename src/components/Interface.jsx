@@ -4,15 +4,17 @@ import Dashboard from "../features/Dashboard/Dashboard";
 import Nav from "./Nav";
 import SecondaryNav from "./SecondaryNav";
 // import Dashboard from "../features/Dashboard/Dashboard";
+
 const Interface = () => {
   return (
     <>
-      <SecondaryNav />
-      <main>
-        {/* <Outlet /> */}
-        <Dashboard />
-      </main>
       <Nav />
+      <SecondaryNav />
+
+      <main className="max-w-full">
+        <Outlet />
+        {/* <Dashboard /> */}
+      </main>
     </>
   );
 };

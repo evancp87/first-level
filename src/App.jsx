@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import "../dist/output.css";
 import { Routes, Route, Outlet } from "react-router-dom";
 import Search from "./features/Dashboard/Search";
+import Dashboard from "./features/Dashboard/Dashboard";
 import Favorites from "./features/Favorites/Favorites";
 import GameDetail from "./features/Game/GameDetail";
 // import Layout from "./components/Layout";
 import SplashScreen from "./components/SplashScreen";
 import Interface from "./components/Interface";
 import Error404 from "./components/Error404";
+import Layout from "./components/Layout";
 import {
   sort,
   reset,
@@ -42,14 +44,18 @@ const App = () => {
         <SplashScreen />
       ) : (
         <>
-          <Routes>
-            <Route exact path="/" element={<Interface />} />
+          <Layout>
+            <Routes>
+              {/* <Route element={<Layout />} /> */}
 
-            <Route path="/search" element={<Search />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/game/:slug" element={<GameDetail />} />
-            <Route path="*" element={<Error404 />} />
-          </Routes>
+              <Route exact path="/" element={<Interface />} />
+              <Route index element={<Dashboard />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/game/:slug" element={<GameDetail />} />
+              <Route path="*" element={<Error404 />} />
+            </Routes>
+          </Layout>
         </>
       )}
     </>

@@ -1,7 +1,17 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    fontFamily: {
+      // sans: ["Monda", "sans-serif"],
+      press: ["'Press Start 2P'", "cursive"],
+    },
+    maxWidth: {
+      "1/3": "30%",
+      "1/2": "300px",
+      "3/4": "75%",
+    },
     screens: {
       sm: "480px",
       md: "768px",
@@ -9,6 +19,7 @@ export default {
       xl: "1440px",
     },
     colors: {
+      logo: "#2AA146",
       blue: "#1fb6ff",
       pink: "#ff49db",
       orange: "#ff7849",
@@ -17,10 +28,7 @@ export default {
       gray: "#8492a6",
       "gray-light": "#d3dce6",
     },
-    fontFamily: {
-      sans: ["Graphik", "sans-serif"],
-      serif: ["Merriweather", "serif"],
-    },
+
     extend: {
       spacing: {
         128: "32rem",
