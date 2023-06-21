@@ -81,7 +81,7 @@ const Search = () => {
 
   const filteredGames = filteredSearch();
   return (
-    <>
+    <section className="flex flex-col">
       <input type="text" onInput={searchValue} />
       <select onInput={sortValue}>
         <option value=""></option>
@@ -104,9 +104,11 @@ const Search = () => {
       <ul>
         {filteredGames.length === 0 && <p>no results found</p>}
         {filteredGames &&
-          filteredGames.map((game) => <GameCard key={game.id} game={game} />)}
+          filteredGames.map((game) => (
+            <GameCard key={game.id} game={game} liked={game.liked} />
+          ))}
       </ul>
-    </>
+    </section>
   );
 };
 
