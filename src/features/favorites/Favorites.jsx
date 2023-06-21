@@ -12,14 +12,13 @@ const Favorites = () => {
   // const [localStorageLikes] = useLocalStorage("Likes", []);
   // const likes = [...likesFromState, ...localStorageLikes];
   const [likes] = useLocalStorage("Likes", []);
-  console.log(likes);
   return (
     <ul>
       {likes.length === 0 && <p>Add Games To Favorites</p>}
       {likes &&
         likes.map((game) => (
           <li key={game.id}>
-            <GameCard game={game} />
+            <GameCard game={game} liked={game.liked} />
           </li>
         ))}
     </ul>
