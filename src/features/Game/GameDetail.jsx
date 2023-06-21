@@ -56,6 +56,11 @@ const GameDetail = () => {
     // },
   } = game;
 
+  // regex handles issue with description where the description from the api contains p and br tags
+  const tidyText = /<\/?p>|<br\s?\/?>/gi;
+  const tidiedDescription = description
+    ? description.replaceAll(tidyText, "")
+    : "";
   // const {
   //   data: { [480]: videoUrl, max: maxVideoUrl },
   //   preview,
@@ -90,7 +95,7 @@ const GameDetail = () => {
       <p>{released}</p>
       <p>{platformNames}</p>
       <p>{genreNames}</p>
-      <p>{description}</p>
+      <p>{tidiedDescription}</p>
 
       <p>{rating}</p>
       <ul>
