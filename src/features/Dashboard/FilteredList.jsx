@@ -34,7 +34,7 @@ const FilteredList = () => {
   };
 
   const filteredList = () => {
-    let filteredList = [...upcoming];
+    let filteredList = [...upcomingGames];
 
     // sorting between either
     if (sortValue && sortValue === "Upcoming Games" && sortValue.length > 0) {
@@ -64,7 +64,7 @@ const FilteredList = () => {
         <option>Upcoming Games</option>
         <option>New Releases</option>
       </select>
-      <ul className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
+      <ul className="carousel carousel-center p-4 space-x-2 rounded-box overflow-y-hidden">
         {filteredGames.length === 0 ? (
           <p>No results found</p>
         ) : (

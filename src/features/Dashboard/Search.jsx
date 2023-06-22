@@ -104,46 +104,48 @@ const Search = () => {
 
   const filteredGames = filteredSearch();
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col items-center">
       {/* <input type="text" onInput={searchValue} /> */}
-      <div className="flex flex-row justify-center my-px gap-[0.5rem]">
-        <select
-          onInput={sortValue}
-          className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
-        >
-          <option value="Asc">Asc</option>
-          <option value="Desc">Desc</option>
-          <option value="Desc">Reset</option>
-        </select>
-        <select
-          onInput={sortValue}
-          className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
-        >
-          <option disabled selected>
-            Filter games by console
-          </option>
-          <option value="Asc">Xbox 360</option>
-        </select>
-        <select
-          onInput={sortValue}
-          className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
-        >
-          <option disabled selected>
-            Filter games by genre
-          </option>
-          <option value="Asc">Action</option>
-        </select>
-      </div>
-      <div className="form-control  max-w-[80vw]">
-        <label className="label">
-          <span className="label-text">Search for games</span>
-        </label>
-        <input
-          onInput={searchValue}
-          type="text"
-          placeholder="Search for games by title, genre or platform"
-          className="input input-bordered w-full max-w-xs"
-        />
+      <div className="flex flex-col items-center">
+        <div className="flex flex-row flex-wrap justify-center my-px gap-[0.5rem]">
+          <select
+            onInput={sortValue}
+            className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
+          >
+            <option value="Asc">Asc</option>
+            <option value="Desc">Desc</option>
+            <option value="Desc">Reset</option>
+          </select>
+          <select
+            onInput={sortValue}
+            className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
+          >
+            <option disabled selected>
+              Filter games by console
+            </option>
+            <option value="Asc">Xbox 360</option>
+          </select>
+          <select
+            onInput={sortValue}
+            className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
+          >
+            <option disabled selected>
+              Filter games by genre
+            </option>
+            <option value="Asc">Action</option>
+          </select>
+        </div>
+        <div className="form-control flex justify-center max-w-[80vw] w-full">
+          <label className="label">
+            <span className="label-text">Search for games</span>
+          </label>
+          <input
+            onInput={searchValue}
+            type="text"
+            placeholder="Search for games by title, genre or platform"
+            className="input input-bordered w-full max-w-xs"
+          />
+        </div>
       </div>
 
       <div>
@@ -153,11 +155,11 @@ const Search = () => {
             filteredGames.map((game) => (
               <GameCard key={game.id} game={game} liked={game.liked} />
             ))}
+          <div className="join grid grid-cols-2">
+            <button className="join-item btn btn-outline">Previous page</button>
+            <button className="join-item btn btn-outline">Next</button>
+          </div>
         </ul>
-        <div className="join grid grid-cols-2">
-          <button className="join-item btn btn-outline">Previous page</button>
-          <button className="join-item btn btn-outline">Next</button>
-        </div>
       </div>
     </section>
   );

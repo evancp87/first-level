@@ -55,7 +55,7 @@ const GameDetail = () => {
     //   ],
     // },
   } = game;
-
+  console.log(background_image);
   // regex handles issue with description where the description from the api contains p and br tags
   const tidyText = /<\/?p>|<br\s?\/?>/gi;
   const tidiedDescription = description
@@ -83,60 +83,81 @@ const GameDetail = () => {
 
   return (
     <>
-      <img src={background_image} alt={name} />
-      <div>
-        <FontAwesomeIcon icon={faCartPlus} />
-        <FontAwesomeIcon icon={faCircleCheck} />
-        <FontAwesomeIcon icon={faHeart} />
-        <FontAwesomeIcon icon={faThumbsUp} flip="horizontal" />
-        <FontAwesomeIcon icon={faThumbsDown} />
-        <div className="rating">
-          <input
-            type="radio"
-            name="rating-2"
-            className="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            name="rating-2"
-            className="mask mask-star-2 bg-orange-400"
-            checked
-          />
-          <input
-            type="radio"
-            name="rating-2"
-            className="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            name="rating-2"
-            className="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            name="rating-2"
-            className="mask mask-star-2 bg-orange-400"
-          />
+      <div
+        style={
+          background_image && {
+            backgroundImage: `url(${background_image})`,
+            height: 500,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }
+        }
+      ></div>
+      {/* <img src={background_image} alt={name} /> */}
+      <section className="flex flex-col items-center gap-4">
+        <div>
+          <div className="flex justify-center gap-4">
+            <FontAwesomeIcon icon={faCartPlus} />
+            <FontAwesomeIcon icon={faHeart} />
+          </div>
+          {/* <FontAwesomeIcon icon={faThumbsUp} flip="horizontal" />
+          <FontAwesomeIcon icon={faThumbsDown} /> */}
+          <div className="flex flex-row ">
+            <div className="rating">
+              <input
+                type="radio"
+                name="rating-2"
+                className="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-2"
+                className="mask mask-star-2 bg-orange-400"
+                checked
+              />
+              <input
+                type="radio"
+                name="rating-2"
+                className="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-2"
+                className="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-2"
+                className="mask mask-star-2 bg-orange-400"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <section>
-        <p className="text-6xl"> {name}</p>
+        <p className="sm:text-6xl"> {name}</p>
         <p>{developerNames}</p>
         <p>{released}</p>
         <p>{platformNames}</p>
         <p>{genreNames}</p>
-        <p>{tidiedDescription}</p>
+        <p className="p-4">{tidiedDescription}</p>
 
-        <p>{rating}</p>
+        <p className="self-end text-4xl">{rating}</p>
       </section>
 
-      <section>
-        <ul className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
+      <section className="p-4 ">
+        <ul
+          className="carousel carousel-center p-4 space-x-2 rounded-box overflow-y-hidden"
+          style={{ height: 300 }}
+        >
           {screenshots &&
             screenshots.map((screenshot, index) => (
-              <li className="carousel-item" key={screenshot.id}>
+              <li
+                className="carousel-item "
+                style={{ height: 300 }}
+                key={screenshot.id}
+              >
                 <img
-                  className="rounded-box"
+                  className="rounded-box object-cover"
                   src={screenshot.image}
                   alt={`${name} screenshot ${index} `}
                 />
@@ -146,9 +167,11 @@ const GameDetail = () => {
 
         {/* only show a trailer if the game page has a trailer */}
         {videoUrl && (
-          <video controls>
-            <source src={videoUrl} type="video/mp4"></source>
-          </video>
+          <div className="flex justify-center">
+            <video controls>
+              <source src={videoUrl} type="video/mp4"></source>
+            </video>
+          </div>
         )}
       </section>
     </>

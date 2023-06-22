@@ -82,10 +82,10 @@ const GameCard = ({ game }) => {
           </picture>
 
           <div className="card-body">
-            <div>
+            <div className="flex flex-col gap-4 ">
               <h2 className="card-title ">{name}</h2>
               <p>Released {released}</p>
-              <p>{platformNames}</p>
+              <p className="text-sm">{platformNames}</p>
             </div>
             <div>
               <FontAwesomeIcon

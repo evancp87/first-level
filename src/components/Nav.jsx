@@ -13,7 +13,7 @@ const Nav = () => {
           <p className="font-press logo">First Level</p>
         </Link>
       </div>
-      <ul className="flex flex-row gap-x-[30px] me-[30px]">
+      <ul className="flex flex-row flex-wrap gap-x-[30px] me-[30px]">
         <li>
           <Link to="/">
             <FontAwesomeIcon icon={faHouse} />
