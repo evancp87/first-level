@@ -8,13 +8,13 @@ import SecondaryNav from "./SecondaryNav";
 const Interface = () => {
   return (
     <>
-      <Nav />
-      <SecondaryNav />
+      {/* <Nav />
+      <SecondaryNav /> */}
 
-      <main className="max-w-full">
-        <Outlet />
-        {/* <Dashboard /> */}
-      </main>
+      {/* <main className="max-w-full"> */}
+      {/* <Outlet /> */}
+      {/* <Dashboard /> */}
+      {/* </main> */}
     </>
   );
 };

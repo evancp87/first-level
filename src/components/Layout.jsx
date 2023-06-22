@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Nav />
-      <main>
+      <main className="flex flex-col">
         <Outlet />
         {children}
       </main>

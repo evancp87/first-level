@@ -7,13 +7,13 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 const Nav = () => {
   return (
-    <nav>
+    <nav className="flex flex-row justify-between ms-[30px] my-[2em] ">
       <div>
         <Link to="/">
           <p className="font-press logo">First Level</p>
         </Link>
       </div>
-      <ul>
+      <ul className="flex flex-row gap-x-[30px] me-[30px]">
         <li>
           <Link to="/">
             <FontAwesomeIcon icon={faHouse} />

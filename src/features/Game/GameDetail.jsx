@@ -61,6 +61,7 @@ const GameDetail = () => {
   const tidiedDescription = description
     ? description.replaceAll(tidyText, "")
     : "";
+
   // const {
   //   data: { [480]: videoUrl, max: maxVideoUrl },
   //   preview,
@@ -74,11 +75,11 @@ const GameDetail = () => {
 
   //   if in basket show market
   const platformNames =
-    platforms && platforms.map((console) => console.platform.name);
+    platforms && platforms.map((console) => console.platform.name).join(", ");
 
   const developerNames =
-    developers && developers.map((developer) => developer.name);
-  const genreNames = genres && genres.map((genre) => genre.name);
+    developers && developers.map((developer) => developer.name).join(", ");
+  const genreNames = genres && genres.map((genre) => genre.name).join(", ");
 
   return (
     <>
@@ -89,33 +90,67 @@ const GameDetail = () => {
         <FontAwesomeIcon icon={faHeart} />
         <FontAwesomeIcon icon={faThumbsUp} flip="horizontal" />
         <FontAwesomeIcon icon={faThumbsDown} />
+        <div className="rating">
+          <input
+            type="radio"
+            name="rating-2"
+            className="mask mask-star-2 bg-orange-400"
+          />
+          <input
+            type="radio"
+            name="rating-2"
+            className="mask mask-star-2 bg-orange-400"
+            checked
+          />
+          <input
+            type="radio"
+            name="rating-2"
+            className="mask mask-star-2 bg-orange-400"
+          />
+          <input
+            type="radio"
+            name="rating-2"
+            className="mask mask-star-2 bg-orange-400"
+          />
+          <input
+            type="radio"
+            name="rating-2"
+            className="mask mask-star-2 bg-orange-400"
+          />
+        </div>
       </div>
-      <p>{name}</p>
-      <p>{developerNames}</p>
-      <p>{released}</p>
-      <p>{platformNames}</p>
-      <p>{genreNames}</p>
-      <p>{tidiedDescription}</p>
+      <section>
+        <p className="text-6xl"> {name}</p>
+        <p>{developerNames}</p>
+        <p>{released}</p>
+        <p>{platformNames}</p>
+        <p>{genreNames}</p>
+        <p>{tidiedDescription}</p>
 
-      <p>{rating}</p>
-      <ul>
-        {screenshots &&
-          screenshots.map((screenshot, index) => (
-            <li key={screenshot.id}>
-              <img
-                src={screenshot.image}
-                alt={`${name} screenshot ${index} `}
-              />
-            </li>
-          ))}
-      </ul>
+        <p>{rating}</p>
+      </section>
 
-      {/* only show a trailer if the game page has a trailer */}
-      {videoUrl && (
-        <video controls>
-          <source src={videoUrl} type="video/mp4"></source>
-        </video>
-      )}
+      <section>
+        <ul className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
+          {screenshots &&
+            screenshots.map((screenshot, index) => (
+              <li className="carousel-item" key={screenshot.id}>
+                <img
+                  className="rounded-box"
+                  src={screenshot.image}
+                  alt={`${name} screenshot ${index} `}
+                />
+              </li>
+            ))}
+        </ul>
+
+        {/* only show a trailer if the game page has a trailer */}
+        {videoUrl && (
+          <video controls>
+            <source src={videoUrl} type="video/mp4"></source>
+          </video>
+        )}
+      </section>
     </>
   );
 };

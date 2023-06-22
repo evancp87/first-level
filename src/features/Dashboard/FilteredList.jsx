@@ -56,17 +56,23 @@ const FilteredList = () => {
   return (
     <>
       {/* <Filters options={filterOptions} onInput={setFilteredGames} /> */}
-      <select onInput={setFilteredGames}>
+
+      <select
+        onInput={setFilteredGames}
+        className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
+      >
         <option>Upcoming Games</option>
         <option>New Releases</option>
       </select>
-      <ul>
+      <ul className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
         {filteredGames.length === 0 ? (
           <p>No results found</p>
         ) : (
           filteredGames &&
           filteredGames.map((game) => (
-            <FilteredGameCard key={game.id} game={game} />
+            <li className="carousel-item" key={game.id}>
+              <FilteredGameCard game={game} />
+            </li>
           ))
         )}
       </ul>

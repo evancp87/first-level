@@ -49,7 +49,9 @@ const GameCard = ({ game }) => {
     setToggleLikes(game);
     //
   };
-  const platformNames = platforms.map((console) => console.platform.name);
+  const platformNames = platforms
+    .map((console) => console.platform.name)
+    .join(", ");
 
   // const ratingsArray = rating.map((rating) => rating.id);
   // const liked = game.liked;

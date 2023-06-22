@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
+
 import GameCard from "../Game/GameCard";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -58,11 +59,33 @@ const Search = () => {
 
     // switch (sortInput) {
     //   case "Asc":
+    //   filteredList.sort((numOne, numTwo) =>
+    //   numOne.name > numTwo.name ? 1 : -1
+    // );
+    //     break;
 
+    //   case "Desc":
+    //   filteredList.sort((numOne, numTwo) =>
+    // numOne.name > numTwo.name ? -1 : 1
+    // );
+    //     break;
+
+    //   case "Reset":
+    //dispatch(reset());
+    //     break;
+    //   case "genre":
+    //dispatch(reset());
+    //     break;
+    //   case "platform":
+    //dispatch(reset());
+    //     break;
+
+    //   case "genre":
+    //dispatch(reset());
     //     break;
 
     //   default:
-    //     break;
+    //     filteredList;
     // }
     if (sortInput === "Asc") {
       filteredList.sort((numOne, numTwo) =>
@@ -82,32 +105,60 @@ const Search = () => {
   const filteredGames = filteredSearch();
   return (
     <section className="flex flex-col">
-      <input type="text" onInput={searchValue} />
-      <select onInput={sortValue}>
-        <option value=""></option>
-        <option value="Asc">Asc</option>
-        <option value="Desc">Desc</option>
-        <option value="Desc">Reset</option>
-        <option value="Desc">Developers</option>
-        <option value="Desc">Genre</option>
-      </select>
-      <select>
-        <option value="Desc">Genre</option>
-      </select>
-      <select>
-        {/* <option>{platformNames}</option> */}
-        <option value="Desc">PS5</option>
-        <option value="Desc">Xbox Series X</option>
-        <option value="Desc">Nintendo Switch</option>
-      </select>
+      {/* <input type="text" onInput={searchValue} /> */}
+      <div className="flex flex-row justify-center my-px gap-[0.5rem]">
+        <select
+          onInput={sortValue}
+          className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
+        >
+          <option value="Asc">Asc</option>
+          <option value="Desc">Desc</option>
+          <option value="Desc">Reset</option>
+        </select>
+        <select
+          onInput={sortValue}
+          className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
+        >
+          <option disabled selected>
+            Filter games by console
+          </option>
+          <option value="Asc">Xbox 360</option>
+        </select>
+        <select
+          onInput={sortValue}
+          className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
+        >
+          <option disabled selected>
+            Filter games by genre
+          </option>
+          <option value="Asc">Action</option>
+        </select>
+      </div>
+      <div className="form-control  max-w-[80vw]">
+        <label className="label">
+          <span className="label-text">Search for games</span>
+        </label>
+        <input
+          onInput={searchValue}
+          type="text"
+          placeholder="Search for games by title, genre or platform"
+          className="input input-bordered w-full max-w-xs"
+        />
+      </div>
 
-      <ul>
-        {filteredGames.length === 0 && <p>no results found</p>}
-        {filteredGames &&
-          filteredGames.map((game) => (
-            <GameCard key={game.id} game={game} liked={game.liked} />
-          ))}
-      </ul>
+      <div>
+        <ul>
+          {filteredGames.length === 0 && <p>no results found</p>}
+          {filteredGames &&
+            filteredGames.map((game) => (
+              <GameCard key={game.id} game={game} liked={game.liked} />
+            ))}
+        </ul>
+        <div className="join grid grid-cols-2">
+          <button className="join-item btn btn-outline">Previous page</button>
+          <button className="join-item btn btn-outline">Next</button>
+        </div>
+      </div>
     </section>
   );
 };
