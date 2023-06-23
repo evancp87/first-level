@@ -1,8 +1,8 @@
 import joi from "joi";
-import { characterSchema } from "./schema";
+import { searchSchema } from "./schema";
 
 export const validate = async (payload) => {
-  const searchBox = joi.object(characterSchema);
+  const searchBox = joi.object(searchSchema);
 
   try {
     const results = await searchBox.validateAsync(payload, {

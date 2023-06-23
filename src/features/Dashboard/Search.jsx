@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
-
+import { validate } from "../../validation/index.js";
 import GameCard from "../Game/GameCard";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,7 +17,8 @@ const Search = () => {
 
   //  include num results
   // pagination
-  //
+  const [searchError, setSearchError] = useState(null);
+
   const dispatch = useDispatch();
   const games = useSelector(selectGames);
   const searchInput = useSelector(selectSearch);
@@ -25,9 +26,15 @@ const Search = () => {
 
   // const platformNames = [...games.map((game) => game.console.platform.name)];
 
-  const searchValue = (e) => {
+  const searchValue = async (e) => {
     console.log(e.target.value);
-    dispatch(search(e.target.value));
+
+    const { value } = e.target;
+    dispatch(search(value));
+    const payload = { search: value };
+    const res = await validate(payload);
+
+    setSearchError(res);
   };
 
   const sortValue = (e) => {
@@ -145,6 +152,12 @@ const Search = () => {
             placeholder="Search for games by title, genre or platform"
             className="input input-bordered w-full max-w-xs"
           />
+          <ul>
+            {searchError &&
+              searchError.map((error, index) => (
+                <li key={index}>{error.message}</li>
+              ))}
+          </ul>
         </div>
       </div>
 

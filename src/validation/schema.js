@@ -1,4 +1,4 @@
 import joi from "joi";
-export const characterSchema = {
-  character: joi.string().min(2).required(),
+export const searchSchema = {
+  search: joi.string().trim().min(3).required().label("Search"),
 };
