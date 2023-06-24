@@ -28,7 +28,8 @@ const Search = () => {
   const [searchError, setSearchError] = useState(null);
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const games = useSelector(selectGames);
   const searchInput = useSelector(selectSearch);
@@ -131,8 +132,14 @@ const Search = () => {
       default:
         filteredList;
     }
+    // pagination
 
-    return filteredList;
+    const startIndex = (currentPage - 1) * 10;
+    const endIndex = startIndex + 10;
+    const paginatedGames = filteredList.slice(startIndex, endIndex);
+
+    return paginatedGames;
+    // return filteredList;
   };
 
   const filteredGames = filteredSearch();
@@ -220,8 +227,18 @@ const Search = () => {
               <GameCard key={game.id} game={game} liked={game.liked} />
             ))}
           <div className="join grid grid-cols-2">
-            <button className="join-item btn btn-outline">Previous page</button>
-            <button className="join-item btn btn-outline">Next</button>
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              className="join-item btn btn-outline"
+            >
+              Previous page
+            </button>
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="join-item btn btn-outline"
+            >
+              Next
+            </button>
           </div>
         </ul>
       </div>
