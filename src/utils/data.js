@@ -63,6 +63,16 @@ export const getGenres = async () => {
   }
 };
 
+export const getPlatforms = async () => {
+  try {
+    const { data } = await axios.get(
+      `https://api.rawg.io/api/platforms?key=${api}`
+    );
+    return data.results;
+  } catch (error) {
+    console.log("error:", error);
+  }
+};
 // screenshots
 export const getScreenshots = async (game_pk) => {
   try {

@@ -43,6 +43,8 @@ export const dashboardSlice = createSlice({
     },
     reset: (state) => {
       state.games = initialState.games;
+      state.sortInput = initialState.sortInput;
+      state.searchInput = initialState.searchInput;
     },
     filterHighestRated: (state) => {
       const highest = state.games.filter((game) => game.rating >= 4.5);

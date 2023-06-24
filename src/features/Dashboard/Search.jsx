@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { validate } from "../../validation/index.js";
 import GameCard from "../Game/GameCard";
@@ -12,19 +12,51 @@ import {
   selectGames,
 } from "./dashboardSlice";
 
+import {
+  selectGenres,
+  selectPlatforms,
+  setPlatforms,
+  setGenres,
+  resetSelectInputs,
+} from "../searchInputs/searchInputsSlice.js";
+
 const Search = () => {
   // searching and filtering-
 
   //  include num results
   // pagination
   const [searchError, setSearchError] = useState(null);
+  const [selectedPlatform, setSelectedPlatform] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("");
 
   const dispatch = useDispatch();
   const games = useSelector(selectGames);
   const searchInput = useSelector(selectSearch);
   const sortInput = useSelector(selectSort);
+  const genreNames = useSelector(selectGenres);
+  const platformNames = useSelector(selectPlatforms);
 
   // const platformNames = [...games.map((game) => game.console.platform.name)];
+  const getInputs = useCallback(() => {
+    dispatch(setPlatforms());
+    dispatch(setGenres());
+  }, [dispatch]);
+
+  useEffect(() => {
+    getInputs();
+  }, [getInputs]);
+
+  const resetFilters = (e) => {
+    const { name, value } = e.target;
+    if (value === "Reset") {
+      if (name === "platform") {
+        setSelectedPlatform("");
+      } else if (name === "genre") {
+        setSelectedGenre("");
+      }
+      dispatch(resetSelectInputs());
+    }
+  };
 
   const searchValue = async (e) => {
     console.log(e.target.value);
@@ -41,6 +73,9 @@ const Search = () => {
     console.log(e.target.value);
     dispatch(sort(e.target.value));
   };
+
+  // const platforms = games.map((game) => game.platforms);
+  // const platformNames = platforms.map((platform) => platform.console.name);
 
   const filteredSearch = () => {
     let filteredList = [...games];
@@ -62,50 +97,41 @@ const Search = () => {
       });
     }
 
-    // sorting alphabetically ascending or descending
-
-    // switch (sortInput) {
-    //   case "Asc":
-    //   filteredList.sort((numOne, numTwo) =>
-    //   numOne.name > numTwo.name ? 1 : -1
-    // );
-    //     break;
-
-    //   case "Desc":
-    //   filteredList.sort((numOne, numTwo) =>
-    // numOne.name > numTwo.name ? -1 : 1
-    // );
-    //     break;
-
-    //   case "Reset":
-    //dispatch(reset());
-    //     break;
-    //   case "genre":
-    //dispatch(reset());
-    //     break;
-    //   case "platform":
-    //dispatch(reset());
-    //     break;
-
-    //   case "genre":
-    //dispatch(reset());
-    //     break;
-
-    //   default:
-    //     filteredList;
-    // }
-    if (sortInput === "Asc") {
-      filteredList.sort((numOne, numTwo) =>
-        numOne.name > numTwo.name ? 1 : -1
+    if (selectedPlatform) {
+      filteredList = filteredList.filter((game) =>
+        game.platforms.some((item) => item.platform.name === selectedPlatform)
       );
-    } else if (sortInput === "Desc") {
-      filteredList.sort((numOne, numTwo) =>
-        numOne.name > numTwo.name ? -1 : 1
-      );
-    } else if (sortInput === "Reset") {
-      dispatch(reset());
-      // dispatch(search(""));
     }
+
+    if (selectedGenre) {
+      filteredList = filteredList.filter((game) =>
+        game.genres.some((genre) => genre.name === selectedGenre)
+      );
+    }
+
+    // sorting alphabetically ascending or descending
+    switch (sortInput) {
+      case "Asc":
+        filteredList.sort((numOne, numTwo) =>
+          numOne.name > numTwo.name ? 1 : -1
+        );
+        break;
+
+      case "Desc":
+        filteredList.sort((numOne, numTwo) =>
+          numOne.name > numTwo.name ? -1 : 1
+        );
+        break;
+
+      // case "Reset":
+      //   filteredList = [...games];
+      //   dispatch(reset());
+      //   break;
+
+      default:
+        filteredList;
+    }
+
     return filteredList;
   };
 
@@ -119,27 +145,52 @@ const Search = () => {
             onInput={sortValue}
             className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
           >
+            <option disabled selected>
+              Sort A - Z
+            </option>
             <option value="Asc">Asc</option>
             <option value="Desc">Desc</option>
-            <option value="Desc">Reset</option>
+            <option value="Reset">Reset</option>
           </select>
           <select
-            onInput={sortValue}
+            name="platform"
+            onInput={(e) => setSelectedPlatform(e.target.value)}
             className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
           >
             <option disabled selected>
               Filter games by console
             </option>
-            <option value="Asc">Xbox 360</option>
+            {platformNames &&
+              platformNames.map((platformName, index) => (
+                <option
+                  key={index}
+                  // value="Asc"
+                  value={platformName}
+                >
+                  {platformName}
+                </option>
+              ))}
+            <option onChange={resetFilters} value="Reset">
+              Reset
+            </option>
           </select>
           <select
-            onInput={sortValue}
+            name="genre"
+            onInput={(e) => setSelectedGenre(e.target.value)}
             className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
           >
             <option disabled selected>
               Filter games by genre
             </option>
-            <option value="Asc">Action</option>
+            {genreNames &&
+              genreNames.map((genreName, index) => (
+                <option key={index} value={genreName}>
+                  {genreName}
+                </option>
+              ))}
+            <option onChange={resetFilters} value="Reset">
+              Reset
+            </option>
           </select>
         </div>
         <div className="form-control flex justify-center max-w-[80vw] w-full">
