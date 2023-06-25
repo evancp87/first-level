@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { useDebounce } from "@uidotdev/usehooks";
 import { validate } from "../../validation/index.js";
 import GameCard from "../Game/GameCard";
 import { useDispatch, useSelector } from "react-redux";
+import Controls from "./Controls.jsx";
 import {
   selectSort,
   selectSearch,
@@ -46,6 +46,12 @@ const Search = () => {
   useEffect(() => {
     getInputs();
   }, [getInputs]);
+
+  // useEffect(() => {
+  //   const filteredGames = filteredSearch();
+  //   setTotalPages(Math.ceil(filteredGames.length / 10)); // Calculate total pages
+  //   setCurrentPage(1); // Reset to the first page
+  // }, [searchInput, selectedPlatform, selectedGenre, sortInput]);
 
   const resetFilters = (e) => {
     const { name, value } = e.target;
@@ -146,7 +152,17 @@ const Search = () => {
   return (
     <section className="flex flex-col items-center">
       {/* <input type="text" onInput={searchValue} /> */}
-      <div className="flex flex-col items-center">
+      <Controls
+        sortValue={sortValue}
+        searchError={searchError}
+        setSelectedPlatform={setSelectedPlatform}
+        resetFilters={resetFilters}
+        searchValue={searchValue}
+        setSelectedGenre={setSelectedGenre}
+        platformNames={platformNames}
+        genreNames={genreNames}
+      />
+      {/* <div className="flex flex-col items-center">
         <div className="flex flex-row flex-wrap justify-center my-px gap-[0.5rem]">
           <select
             onInput={sortValue}
@@ -217,24 +233,28 @@ const Search = () => {
               ))}
           </ul>
         </div>
-      </div>
+      </div> */}
 
       <div>
         <ul>
           {filteredGames.length === 0 && <p>no results found</p>}
+
           {filteredGames &&
             filteredGames.map((game) => (
               <GameCard key={game.id} game={game} liked={game.liked} />
             ))}
+
           <div className="join grid grid-cols-2">
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
               className="join-item btn btn-outline"
             >
               Previous page
             </button>
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
+              // disabled={currentPage === totalPages}
               className="join-item btn btn-outline"
             >
               Next
