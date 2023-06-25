@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import { lazy, suspense } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -8,8 +8,6 @@ import { useLocalStorage } from "../../utils/hooks/localStorage";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import {
   gameLikes,
@@ -40,18 +38,20 @@ const GameCard = ({ game }) => {
   } = game;
 
   const dispatch = useDispatch();
-  // const notify = () => toast("Added to favorites!");
-  const [toggleLikes, setToggleLikes] = useLocalStorage("Likes", []);
+  // const [toggleLikes, setToggleLikes] = useLocalStorage("Likes", []);
+  const [likes, setLikes] = useLocalStorage("Likes", []);
 
   const handleLikes = (id, game) => {
     dispatch(gameLikes(id));
+
     // console.log(Object.entries(toggleLikes));
-    setToggleLikes(game);
+    // setToggleLikes(game);
+    setLikes([...likes, game]);
+
     //
   };
-  const platformNames = platforms
-    .map((console) => console.platform.name)
-    .join(", ");
+  const platformNames =
+    platforms && platforms.map((console) => console.platform.name).join(", ");
 
   // const ratingsArray = rating.map((rating) => rating.id);
   // const liked = game.liked;

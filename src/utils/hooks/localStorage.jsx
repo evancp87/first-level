@@ -13,34 +13,6 @@ export function useLocalStorage(key, initialState) {
     }
   });
 
-  //   const toggleItem = (key, value) => {
-  //     if (localStorage.getItem(key)) {
-  //       localStorage.removeItem(key);
-  //     } else {
-  //       localStorage.setItem(key, value);
-  //     }
-  //   };
-
-  //   const toggleItem = (key) => {
-  //     if (localStorage.getItem(key)) {
-  //       localStorage.removeItem(key);
-  //     } else {
-  //       localStorage.setItem(key, JSON.stringify(state));
-  //     }
-  //   };
-
-  //   const toggleItem = () => {
-  //     setState((prevState) => {
-  //       const newValue = !prevState;
-  //       if (newValue) {
-  //         localStorage.setItem(key, JSON.stringify(newValue));
-  //       } else {
-  //         localStorage.removeItem(key);
-  //       }
-  //       return newValue;
-  //     });
-  //   };
-
   //   const toggleItem = (value) => {
   //     if (state.includes(value)) {
   //       const updatedState = state.filter((item) => item !== value);
