@@ -1,36 +1,20 @@
-// dates
-// ratings
-
-// filtering
-
-export const filteredSListFunction = (arr, inputOne, inputTwo) => {
-  let filteredList = [...arr];
-  // if a search query is entered, filter the  state and return the character that is in the query
-  if (inputOne) {
-    filteredList = filteredList.filter((item) =>
-      item.character.toLowerCase().includes(inputOne.toLowerCase())
-    );
+// For truncating strings where needed
+export const truncateText = (str, num) => {
+  if (str.length <= num) {
+    return str;
   }
-  // sorting alphabetically ascending or descending
-  if (inputTwo === "Asc") {
-    filteredList.sort((numOne, numTwo) =>
-      numOne.character > numTwo.character ? 1 : -1
-    );
-  } else if (inputTwo === "Desc") {
-    filteredList.sort((numOne, numTwo) =>
-      numOne.character > numTwo.character ? -1 : 1
-    );
-  }
-
-  return filteredList;
-};
-
-// inputs
-
-// dynamic api call functions
-
-const getData = (verb, url) => {
-  const { data } = axios[verb](url);
+  return str.slice(0, num) + "...";
 };
 
 // calculate cart price
+
+export const sumItems = (items) => {
+  // Storage(items);
+  let itemCount = items.reduce((total, product) => total + product.quantity, 0);
+
+  let total = items
+    .reduce((total, product) => total + product.price * product.quantity, 0)
+    .toFixed(2);
+
+  return { itemCount, total };
+};

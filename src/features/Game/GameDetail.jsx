@@ -9,6 +9,7 @@ import {
   selectScreenshots,
   selectTrailers,
 } from "./GameSlice";
+// import { truncateText } from "../../utils/helpers";
 import Hero from "../../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
@@ -17,8 +18,10 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import Skeleton from "react-loading-skeleton";
-
+import parse from "html-react-parser";
+import { addToCart } from "../cart/cartSlice";
 const GameDetail = () => {
+  // const [showMore, setShowMore] = useState(false);
   const dispatch = useDispatch();
   const game = useSelector(selectGameDetail);
   const screenshots = useSelector(selectScreenshots);
@@ -46,6 +49,7 @@ const GameDetail = () => {
     genres,
     developers,
     description,
+    id,
     // rating: {
     //   ratings: [
     //     { id: ratingId },
@@ -56,18 +60,26 @@ const GameDetail = () => {
     // },
   } = game;
   console.log(background_image);
+
+  const handleAddToCart = (game) => {
+    dispatch(addToCart(game));
+  };
+
+  const gameDetails = {
+    name,
+    background_image,
+    id,
+  };
+
   // regex handles issue with description where the description from the api contains p and br tags
-  const tidyText = /<\/?p>|<br\s?\/?>/gi;
-  const tidiedDescription = description
-    ? description.replaceAll(tidyText, "")
-    : "";
+  // const tidyText = /<\/?p>|<br\s?\/?>/gi;
+  // const tidiedDescription = description
+  //   ? description.replaceAll(tidyText, "")
+  //   : "";
 
-  // const {
-  //   data: { [480]: videoUrl, max: maxVideoUrl },
-  //   preview,
-  // } = trailers;
+  // const truncatedDescription = truncateText(description, 1000);
 
-  // console.log(videoUrl);
+  // const truncatedDescription = truncateText(description, 1000);
 
   const videoUrl = trailers.length > 0 && trailers[0].data[480];
 
@@ -80,6 +92,8 @@ const GameDetail = () => {
   const developerNames =
     developers && developers.map((developer) => developer.name).join(", ");
   const genreNames = genres && genres.map((genre) => genre.name).join(", ");
+
+  console.log(typeof description);
 
   return (
     <>
@@ -98,7 +112,10 @@ const GameDetail = () => {
       <section className="flex flex-col items-center gap-4">
         <div>
           <div className="flex justify-center gap-4">
-            <FontAwesomeIcon icon={faCartPlus} />
+            <FontAwesomeIcon
+              icon={faCartPlus}
+              onClick={() => handleAddToCart(gameDetails)}
+            />
             <FontAwesomeIcon icon={faHeart} />
           </div>
           {/* <FontAwesomeIcon icon={faThumbsUp} flip="horizontal" />
@@ -139,8 +156,16 @@ const GameDetail = () => {
         <p>{released}</p>
         <p>{platformNames}</p>
         <p>{genreNames}</p>
-        <p className="p-4">{tidiedDescription}</p>
+        {/* <p className="p-4"> */}
+        {/* {showMore ? tidiedDescription : truncatedDescription} */}
+        {/* {showMore ? description : truncatedDescription} */}
+        {/* {parse(description)} */}
+        {description}
 
+        {/* </p> */}
+        {/* <button onClick={() => setShowMore(!showMore)}>
+          {showMore ? "Show Less" : "Show More"}
+        </button> */}
         <p className="self-end text-4xl">{rating}</p>
       </section>
 

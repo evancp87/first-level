@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import gameReducer from "../features/Game/GameSlice";
-// import cartReducer from "../features/cart/cartSlice";
+import cartReducer from "../features/cart/cartSlice";
 // import favoritesReducer from "../features/favorites/favoritesSlice";
 import dashboardReducer from "../features/Dashboard/dashboardSlice";
 import searchInputsReducer from "../features/searchInputs/searchInputsSlice";
@@ -9,7 +9,7 @@ import thunk from "redux-thunk";
 export const store = configureStore({
   reducer: {
     games: gameReducer,
-    // cart: cartReducer,
+    cart: cartReducer,
     inputs: searchInputsReducer,
     dashboard: dashboardReducer,
     // favorites: favoritesReducer,
