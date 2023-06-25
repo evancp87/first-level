@@ -9,64 +9,72 @@ import {
   addToCart,
   removeFromCart,
   clear,
-  increment,
-  decrement,
-} from "../Dashboard/dashboardSlice";
+} from "./cartSlice";
 
 import { useLocalStorage } from "../../utils/hooks/localStorage";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const items = selectItems;
+  const items = useSelector(selectItems);
+  const totalAmount = useSelector(selectCount);
 
   const handleRemoveItem = (payload) => {
-    dispatch(removeItem(payload));
+    dispatch(removeFromCart(payload));
   };
 
   const handleClearCart = () => {
     dispatch(clear());
   };
 
-  const handleIncrement = () => {
-    dispatch(increment());
+  const handleCheckout = () => {
+    alert("Thanks for purchasing!");
+    dispatch(clear());
   };
 
-  const handleDecrement = () => {
-    dispatch(decrement());
-  };
   return (
     <>
       {items.length === 0 ? (
-        <p>Your cart is empty </p>
+        <p className="p" style={{ padding: "3em" }}>
+          Your cart is empty{" "}
+        </p>
       ) : (
-        <div className="cart_content">
+        <div className="">
           {items.map((item) => (
-            <div key={item.id} className="cart__content-product">
-              <div className="cart__content-product-details">
-                <img alt="product img" className="cart__content-product-img" />
-                <div className="cart__content-product-info">
-                  <h3 className="cart__content-product-info-heading">{name}</h3>
-                  <div className="cart__content-product-info-quantity">
-                    {" "}
-                    <p className="cart__content-product-info-quantity-detail">
-                      £{price} x {quantity}
-                    </p>
-                    <p className="cart__content-product-info-quantity-amount">
-                      £{total}
-                    </p>
-                    <FontAwesomeIcon
-                      icon={faTrashCan}
-                      onClick={handleRemoveItem}
-                    />
+            <div key={item.id} className="m-y-4">
+              <div className="">
+                <div className="">
+                  <img
+                    src={item.background_image}
+                    alt="product img"
+                    className=""
+                  />
+                  <div className="">
+                    <h3 className="">{item.name}</h3>
+                    <div className="flex flex-row justify-between">
+                      <p>
+                        £{item.price} x {item.quantity}
+                        {/* £{item.price} */}
+                      </p>
+                      <div
+                        className="flex self-end"
+                        style={{ alignSelf: "end" }}
+                      >
+                        <FontAwesomeIcon
+                          icon={faTrashCan}
+                          onClick={handleRemoveItem}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
-          <FontAwesomeIcon icon={faTrashCan} onClick={handleClearCart} />
-          <button>Checkout</button>
-          <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
-          <FontAwesomeIcon icon="fa-solid fa-trash-can" />
+          <p className="">£{totalAmount}</p>
+          <button onClick={handleClearCart}>Clear</button>
+          <button onClick={handleCheckout}>Checkout</button>
+          <FontAwesomeIcon icon={["fa-solid", "fa-cart-shopping"]} />
+          <FontAwesomeIcon icon={["fa-solid", "fa-trash-can"]} />
         </div>
       )}
     </>
