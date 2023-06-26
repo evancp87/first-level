@@ -1,13 +1,25 @@
-##User stories:
-Using the app, the user should be able to:
-search for games by game title, developer/publisher and maybe genre and ratings
-Genre could also be a separate search option
-Each game card should show an image of the game, the title, year released, age rating, type, average rating and potentially more ratings data i.e. ratings count
-add the game to a wish list.
-rate a title and it is automatically updated on the card and anywhere else the ratings are shown
-platforms the game is on
-navigate to a page for any game by simply clicking on the card.
-Each page has a more detailed description of the game
-Maybe a link to the game store
-Here, the user can also add a game to their Wishlist.
-They can also add the game to their cart
+#First Level
+
+##Introduction
+
+This app is my React Frontend project as part of The Jump Digital School's 14th cohort Software Engineering Course. It uses the [RAWG Video Games Database API](https://rawg.io/apidocs) to fetch data and other assets on video games to display to the user.
+
+##User Stories
+The user is able to:
+
+-See a dashboard where they can filter by new releases/upcoming games and see a top 10 list of highly rated games
+
+- Click on each game and be taken to the game detail, including a description, screenshots, trailers, etc
+- Like games to save to local storage and view on a favorites page
+- Delete games from local storage/favorites
+- Visit a search page and query/filter results name, genre and more using search and select inputs
+- The results are paginated
+- Have their search input validated for errors
+  Input error validation
+- Add games to a shopping basket and see their selections clearly, with a total amount to pay
+  showing
+
+##Installation
+-To install this app, clone the repository and run `npm install` in the root directory.
+
+- To start the app, run `npm run dev`
