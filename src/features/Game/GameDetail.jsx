@@ -10,18 +10,15 @@ import {
   selectTrailers,
 } from "./GameSlice";
 // import { truncateText } from "../../utils/helpers";
-import Hero from "../../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
-import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import Skeleton from "react-loading-skeleton";
 import parse from "html-react-parser";
 import { addToCart } from "../cart/cartSlice";
 const GameDetail = () => {
   // const [showMore, setShowMore] = useState(false);
+
   const dispatch = useDispatch();
   const game = useSelector(selectGameDetail);
   const screenshots = useSelector(selectScreenshots);
@@ -50,25 +47,20 @@ const GameDetail = () => {
     developers,
     description,
     id,
-    // rating: {
-    //   ratings: [
-    //     { id: ratingId },
-    //     { title: ratingTitle },
-    //     { count: ratingCount },
-    //     { percent: ratingPercent },
-    //   ],
-    // },
+    price,
   } = game;
-  console.log(background_image);
 
   const handleAddToCart = (game) => {
     dispatch(addToCart(game));
   };
 
+  // Object of game detail sent to the shopping cart
+
   const gameDetails = {
     name,
     background_image,
     id,
+    price,
   };
 
   // regex handles issue with description where the description from the api contains p and br tags
@@ -102,7 +94,7 @@ const GameDetail = () => {
           background_image && {
             backgroundImage: `url(${background_image})`,
             height: 500,
-            backgroundPosition: "center",
+            backgroundPosition: "top",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
           }
@@ -110,47 +102,14 @@ const GameDetail = () => {
       ></div>
       {/* <img src={background_image} alt={name} /> */}
       <section className="flex flex-col items-center gap-4">
-        <div>
-          <div className="flex justify-center gap-4">
-            <FontAwesomeIcon
-              icon={faCartPlus}
-              onClick={() => handleAddToCart(gameDetails)}
-            />
-            <FontAwesomeIcon icon={faHeart} />
-          </div>
-          {/* <FontAwesomeIcon icon={faThumbsUp} flip="horizontal" />
-          <FontAwesomeIcon icon={faThumbsDown} /> */}
-          <div className="flex flex-row ">
-            <div className="rating">
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-orange-400"
-                checked
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-2"
-                className="mask mask-star-2 bg-orange-400"
-              />
-            </div>
-          </div>
+        <div className="flex justify-center gap-4">
+          <FontAwesomeIcon
+            icon={faCartPlus}
+            onClick={() => handleAddToCart(gameDetails)}
+          />
+          <FontAwesomeIcon icon={faHeart} />
         </div>
+
         <p className="sm:text-6xl"> {name}</p>
         <p>{developerNames}</p>
         <p>{released}</p>
@@ -161,6 +120,7 @@ const GameDetail = () => {
         {/* {showMore ? description : truncatedDescription} */}
         {/* {parse(description)} */}
         {description}
+        <p>{price}</p>
 
         {/* </p> */}
         {/* <button onClick={() => setShowMore(!showMore)}>
