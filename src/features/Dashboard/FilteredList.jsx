@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import FilteredGameCard from "./FilteredGameCard";
 import { useDispatch, useSelector } from "react-redux";
-import Filters from "../../components/Filters";
 import {
   selectReset,
   selectSort,
