@@ -13,7 +13,10 @@ const Nav = () => {
   const count = useSelector(selectTotal);
 
   return (
-    <nav className="flex flex-row justify-between ms-[30px] my-[2em] ">
+    <nav
+      // style={{ color: "#2AA146" }}
+      className="flex flex-row justify-between ms-[30px] py-[2em] "
+    >
       <div>
         <Link to="/">
           <p className="font-press logo">First Level</p>
