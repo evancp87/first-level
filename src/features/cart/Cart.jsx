@@ -1,23 +1,16 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import {
-  selectEmpty,
-  selectItems,
-  selectCount,
-  addToCart,
-  removeFromCart,
-  clear,
-} from "./cartSlice";
+import { selectItems, selectCount, removeFromCart, clear } from "./cartSlice";
 
-import { useLocalStorage } from "../../utils/hooks/localStorage";
+// import { useLocalStorage } from "../../utils/hooks/localStorage";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
   const totalAmount = useSelector(selectCount);
 
+  // handles interactions in cart with items
   const handleRemoveItem = (payload) => {
     dispatch(removeFromCart(payload));
   };
@@ -32,6 +25,7 @@ const Cart = () => {
   };
 
   return (
+    // if there are items loop over and show details, including price and total
     <>
       {items.length === 0 ? (
         <p className="p" style={{ padding: "3em" }}>
@@ -53,7 +47,6 @@ const Cart = () => {
                     <div className="flex flex-row justify-between">
                       <p>
                         £{item.price} x {item.quantity}
-                        {/* £{item.price} */}
                       </p>
                       <div
                         className="flex self-end"
