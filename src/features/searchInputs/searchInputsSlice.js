@@ -23,9 +23,11 @@ export const inputsSlice = createSlice({
   name: "inputs",
   initialState,
   reducers: {
-    resetSelectInputs: (state) => {
+    resetSelectInputs: (state, action) => {
       state.platforms = initialState.platforms;
       state.genres = initialState.genres;
+      // state.platforms = action.payload;
+      // state.genres = action.payload;
     },
   },
   extraReducers: (builder) => {
