@@ -21,11 +21,11 @@ const Controls = ({
             </option>
             <option value="Asc">Asc</option>
             <option value="Desc">Desc</option>
-            <option value="Reset">Reset</option>
+            {/* <option value="Reset">Reset</option> */}
           </select>
           <select
             name="platform"
-            onInput={(e) => setSelectedPlatform(e.target.value)}
+            onChange={(e) => setSelectedPlatform(e.target.value)}
             className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
           >
             <option disabled selected>
@@ -41,13 +41,13 @@ const Controls = ({
                   {platformName}
                 </option>
               ))}
-            <option onChange={resetFilters} value="Reset">
+            {/* <option onChange={resetFilters} value="Reset">
               Reset
-            </option>
+            </option> */}
           </select>
           <select
             name="genre"
-            onInput={(e) => setSelectedGenre(e.target.value)}
+            onChange={(e) => setSelectedGenre(e.target.value)}
             className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
           >
             <option disabled selected>
@@ -59,9 +59,9 @@ const Controls = ({
                   {genreName}
                 </option>
               ))}
-            <option onChange={resetFilters} value="Reset">
+            {/* <option onChange={resetFilters} value="Reset">
               Reset
-            </option>
+            </option> */}
           </select>
         </div>
         <div className="form-control flex justify-center max-w-[80vw] w-full">
@@ -69,7 +69,7 @@ const Controls = ({
             <span className="label-text">Search for games</span>
           </label>
           <input
-            onInput={searchValue}
+            onChange={searchValue}
             type="text"
             placeholder="Search for games by title, genre or platform"
             className="input input-bordered w-full max-w-xs"
@@ -80,6 +80,9 @@ const Controls = ({
                 <li key={index}>{error.message}</li>
               ))}
           </ul>
+          <button value="reset" onClick={resetFilters}>
+            Reset
+          </button>
         </div>
       </div>
     </>

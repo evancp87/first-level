@@ -42,7 +42,7 @@ export const dashboardSlice = createSlice({
       state.searchInput = action.payload;
     },
     reset: (state) => {
-      state.games = initialState.games;
+      // state.games = initialState.games;
       state.sortInput = initialState.sortInput;
       state.searchInput = initialState.searchInput;
     },
