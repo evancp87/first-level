@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -26,24 +27,24 @@ const Cart = () => {
 
   return (
     // if there are items loop over and show details, including price and total
-    <>
+    <div className="">
       {items.length === 0 ? (
-        <p className="p" style={{ padding: "3em" }}>
-          Your cart is empty{" "}
+        <p className="flex justify-center" style={{ padding: "3em" }}>
+          Your cart is empty
         </p>
       ) : (
-        <div className="">
+        <div className="p-2">
           {items.map((item) => (
-            <div key={item.id} className="m-y-4">
+            <div key={item.id} className="my-4">
               <div className="">
-                <div className="">
+                <div className="p-2">
                   <img
                     src={item.background_image}
                     alt="product img"
-                    className=""
+                    className="rounded-md"
                   />
                   <div className="">
-                    <h3 className="">{item.name}</h3>
+                    <h3 className="my-2 text-lg">{item.name}</h3>
                     <div className="flex flex-row justify-between">
                       <p>
                         £{item.price} x {item.quantity}
@@ -53,6 +54,7 @@ const Cart = () => {
                         style={{ alignSelf: "end" }}
                       >
                         <FontAwesomeIcon
+                          className="cursor-pointer"
                           icon={faTrashCan}
                           onClick={handleRemoveItem}
                         />
@@ -63,14 +65,26 @@ const Cart = () => {
               </div>
             </div>
           ))}
-          <p className="">£{totalAmount}</p>
-          <button onClick={handleClearCart}>Clear</button>
-          <button onClick={handleCheckout}>Checkout</button>
+          <p className="my-2 p-2">Total: £{totalAmount}</p>
+          <div className="mt-2">
+            <button
+              className="text-slate-100 mx-2 w-[30%] rounded-full bg-logo p-2 "
+              onClick={handleClearCart}
+            >
+              Clear
+            </button>
+            <button
+              className="text-slate-100 mx-2 w-[30%] rounded-full bg-logo p-2"
+              onClick={handleCheckout}
+            >
+              Checkout
+            </button>
+          </div>
           <FontAwesomeIcon icon={["fa-solid", "fa-cart-shopping"]} />
           <FontAwesomeIcon icon={["fa-solid", "fa-trash-can"]} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
