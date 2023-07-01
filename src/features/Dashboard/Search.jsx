@@ -1,8 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { validate } from "../../validation/index.js";
 import GameCard from "../Game/GameCard";
 import { useDispatch, useSelector } from "react-redux";
 import Controls from "./Controls.jsx";
+import { useHandleLikes } from "../../utils/hooks/localStorage.jsx";
+
 import {
   selectSort,
   selectSearch,
@@ -28,6 +30,7 @@ const Search = () => {
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchText, setSearchText] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const games = useSelector(selectGames);
@@ -35,7 +38,7 @@ const Search = () => {
   const sortInput = useSelector(selectSort);
   const genreNames = useSelector(selectGenres);
   const platformNames = useSelector(selectPlatforms);
-
+  const { likes, handleLikes } = useHandleLikes();
   // const platformNames = [...games.map((game) => game.console.platform.name)];
   const getInputs = useCallback(() => {
     dispatch(setPlatforms());
@@ -52,17 +55,22 @@ const Search = () => {
     setCurrentPage(1);
   }, [searchInput, selectedPlatform, selectedGenre, sortInput]);
 
-  const resetFilters = () => {
-    dispatch(reset());
-    setSelectedPlatform("");
+  const [selectedSort, setSelectedSort] = useState("Filter games by console");
+  const handlePlatformResets = () => {
     setSelectedGenre("");
-    searchValue({ target: "" });
-    sortValue({ target: "" });
+    setSelectedPlatform("");
+    setSelectedSort("");
+  };
+  const resetFilters = () => {
+    // to reset filteredList
+    dispatch(reset());
+    // to reset inputs
+    handlePlatformResets();
   };
 
   const searchValue = async (e) => {
     console.log(e.target.value);
-
+    setSearchText(e.target.value);
     const { value } = e.target;
     dispatch(search(value));
     const payload = { search: value };
@@ -74,6 +82,7 @@ const Search = () => {
   const sortValue = (e) => {
     console.log(e.target.value);
     dispatch(sort(e.target.value));
+    setSelectedSort(e.target.value);
   };
 
   const filteredSearch = () => {
@@ -154,6 +163,11 @@ const Search = () => {
         setSelectedGenre={setSelectedGenre}
         platformNames={platformNames}
         genreNames={genreNames}
+        selectedGenre={selectedGenre}
+        selectedPlatform={selectedPlatform}
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
+        searchText={searchText}
       />
 
       <div>
@@ -162,26 +176,30 @@ const Search = () => {
 
           {filteredGames &&
             filteredGames.map((game) => (
-              <GameCard key={game.id} game={game} liked={game.liked} />
+              <GameCard
+                key={game.id}
+                game={game}
+                liked={game.liked}
+                handleLikes={handleLikes}
+              />
             ))}
-
-          <div className="join grid grid-cols-2">
-            <button
-              onClick={() => setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="join-item btn btn-outline"
-            >
-              Previous page
-            </button>
-            <button
-              onClick={() => setCurrentPage(currentPage + 1)}
-              // disabled={currentPage === totalPages}
-              className="join-item btn btn-outline"
-            >
-              Next
-            </button>
-          </div>
         </ul>
+        <div className="join my-[3em] grid grid-cols-2  pe-[1em] ps-[1em]">
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="btn-outline join-item btn"
+          >
+            Previous page
+          </button>
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            // disabled={currentPage === totalPages}
+            className="btn-outline join-item btn"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </section>
   );
