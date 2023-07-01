@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { gameLikes } from "../../features/Dashboard/dashboardSlice";
 
 export function useLocalStorage(key, initialState) {
   const [state, setState] = useState(() => {
     try {
       const storedData = localStorage.getItem(key);
-      //   TODO handle if already in localStorage- i.e if alreadyAdde return
 
       return storedData ? JSON.parse(storedData) : initialState;
     } catch (error) {
@@ -12,22 +13,58 @@ export function useLocalStorage(key, initialState) {
       return initialState;
     }
   });
-
-  //   const toggleItem = (value) => {
-  //     if (state.includes(value)) {
-  //       const updatedState = state.filter((item) => item !== value);
-  //       setState(updatedState);
-  //       localStorage.removeItem(key);
-  //     } else {
-  //       const updatedState = [...state, value];
-  //       setState(updatedState);
-  //       localStorage.setItem(key, JSON.stringify(updatedState));
-  //     }
-  //   };
+  const removeItem = () => {
+    localStorage.removeItem(key);
+  };
 
   useEffect(() => {
+    console.log(key, state);
     localStorage.setItem(key, JSON.stringify(state));
   }, [state, key]);
 
-  return [state, setState];
+  return [state, setState, removeItem];
+}
+
+export function useHandleLikes() {
+  const dispatch = useDispatch();
+  const [likes, setLikes] = useLocalStorage("Likes", []);
+
+  const handleLikes = (id, game) => {
+    dispatch(gameLikes(id));
+
+    // Finds index of specific game in local storage
+    const likedGameIndex = likes.findIndex((likedGame) => likedGame.id === id);
+
+    // checks if likedGame is in the localStorage array and if it is splices it out and updates, otherwise adds the game to local storage
+    if (likedGameIndex !== -1) {
+      const updatedLikes = [...likes];
+      updatedLikes.splice(likedGameIndex, 1);
+      setLikes(updatedLikes);
+      localStorage.setItem("Likes", JSON.stringify(updatedLikes));
+    } else {
+      const {
+        id: gameId,
+        slug,
+        name,
+        released,
+        background_image,
+        rating,
+        liked,
+      } = game;
+      const likedGame = {
+        id: gameId,
+        slug,
+        name,
+        released,
+        background_image,
+        rating,
+        liked: !liked,
+      };
+
+      setLikes([...likes, likedGame]);
+      localStorage.setItem("Likes", JSON.stringify([...likes, likedGame]));
+    }
+  };
+
+  return { likes, handleLikes };
 }
