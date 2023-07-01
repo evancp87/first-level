@@ -16,11 +16,11 @@ export const favoritesSlice = createSlice({
       state.likes = action.payload;
     },
     removeLike: (state, action) => {
-      const indexOf = state.simpsons.findIndex(
-        (item) => item.character === action.payload
+      const indexOf = state.likes.findIndex(
+        (item) => item.liked === action.payload
       );
       console.log("the indexOf is:", indexOf);
-      state.simpsons.splice(indexOf, 1);
+      state.likes.splice(indexOf, 1);
     },
 
     likes: (state, action) => {
