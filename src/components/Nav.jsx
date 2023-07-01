@@ -15,29 +15,29 @@ const Nav = () => {
   return (
     <nav
       // style={{ color: "#2AA146" }}
-      className="flex flex-row justify-between ms-[30px] py-[2em] "
+      className="ms-[30px] flex flex-row justify-between py-[2em] "
     >
       <div>
         <Link to="/">
-          <p className="font-press logo">First Level</p>
+          <p className="logo-green cursor-pointer font-press">First Level</p>
         </Link>
       </div>
-      <ul className="flex flex-row flex-wrap gap-x-[30px] me-[30px]">
+      <ul className="me-[30px] flex flex-row flex-wrap gap-x-[30px]">
         <li>
           <Link to="/">
-            <FontAwesomeIcon icon={faHouse} />
+            <FontAwesomeIcon className="cursor-pointer" icon={faHouse} />
           </Link>
         </li>
         <li>
           <Link to="/favorites">
-            <FontAwesomeIcon icon={faHeart} />
+            <FontAwesomeIcon className="cursor-pointer" icon={faHeart} />
           </Link>
         </li>
         <li>
-          <div className="dropdown dropdown-end relative">
+          <div className="dropdown-end dropdown relative">
             {items.length > 0 && (
               <p
-                className="absolute text-slate-100 flex justify-center items-center"
+                className="text-slate-100 absolute flex items-center justify-center"
                 style={{
                   position: "absolute",
                   border: "2px solid orange",
@@ -60,7 +60,7 @@ const Nav = () => {
             </label>
             <div
               tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+              className="dropdown-content menu rounded-box z-[1] w-[200px] max-w-[300px] bg-base-100 p-2 shadow md:w-[300px]"
             >
               <Cart />
             </div>
@@ -69,7 +69,10 @@ const Nav = () => {
 
         <li>
           <Link to="/search">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <FontAwesomeIcon
+              className="cursor-pointer"
+              icon={faMagnifyingGlass}
+            />
           </Link>
         </li>
       </ul>
