@@ -1,10 +1,11 @@
-#First Level
+# First Level
 
-##Introduction
+## Introduction
 
 This app is my React Frontend project as part of The Jump Digital School's 14th cohort Software Engineering Course. It uses the [RAWG Video Games Database API](https://rawg.io/apidocs) to fetch data and other assets on video games to display to the user.
 
-##User Stories
+## User Stories
+
 The user is able to:
 
 -See a dashboard where they can filter by new releases/upcoming games and see a top 10 list of highly rated games
@@ -18,6 +19,19 @@ The user is able to:
   Input error validation
 - Add games to a shopping basket and see their selections clearly, with a total amount to pay
   showing
+
+## Tech Stack & Dependencies
+
+- React
+- Vite
+- Tailwind CSS
+- Redux Tool Kit
+- Joi
+- GSAP
+- Daisy UI
+- React Loading Skeleton
+- React Transition Group
+- Axios
 
 ##Installation
 -To install this app, clone the repository and run `npm install` in the root directory.
