@@ -35,7 +35,7 @@ export const calculateOverallRating = (ratingData) => {
 // Page transitions animations
 export const onPageEnter = (node) => {
   gsap.from(node, {
-    y: 50,
+    y: 100,
     delay: 0.2,
     ease: "power3",
     opacity: 0,
@@ -57,3 +57,23 @@ export const onPageExit = (node) => {
 };
 
 // ============================================
+
+// To cache api results on user's disk
+// ============================================
+
+export const storeCache = (key, data) => {
+  localStorage.setItem(key, JSON.stringify(data));
+};
+
+export const getCache = (key) => {
+  const diskData = JSON.parse(localStorage.getItem(key));
+  return diskData ? diskData : [];
+};
+
+export const getCachedGames = () => {
+  return getCache("cachedGames");
+};
+
+export const cacheGames = (data) => {
+  storeCache("cachedGames", data);
+};
