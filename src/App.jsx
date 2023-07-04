@@ -1,5 +1,6 @@
-import { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 import "../dist/output.css";
 import { Routes, Route } from "react-router-dom";
@@ -7,10 +8,10 @@ import Search from "./features/Dashboard/Search";
 import Dashboard from "./features/Dashboard/Dashboard";
 import Favorites from "./features/Favorites/Favorites";
 import GameDetail from "./features/Game/GameDetail";
-import SplashScreen from "./components/SplashScreen";
 import Interface from "./components/Interface";
 import Error404 from "./components/Error404";
 import Layout from "./components/Layout";
+import "react-loading-skeleton/dist/skeleton.css";
 import {
   sort,
   reset,
@@ -23,14 +24,15 @@ import {
 const App = () => {
   const dispatch = useDispatch();
   const [showSplash, setShowSplash] = useState(true);
-
+  const [loading, setLoading] = useState(true);
   const getData = useCallback(async () => {
+    setLoading(true);
     dispatch(setGames());
 
     setTimeout(() => {
-      setShowSplash(false);
+      setLoading(false);
     }, 3000);
-  }, [dispatch, setShowSplash]);
+  }, [dispatch, setLoading]);
 
   useEffect(() => {
     getData();
@@ -38,8 +40,10 @@ const App = () => {
 
   return (
     <>
-      {showSplash ? (
-        <SplashScreen />
+      {loading ? (
+        <div className="flex h-screen items-center justify-center">
+          <PacmanLoader color="#36d7b7" loading={loading} />
+        </div>
       ) : (
         <>
           <Layout>

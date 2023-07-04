@@ -1,55 +1,64 @@
+import { getCachedGames, cacheGames } from "./helpers";
+
 const api = "b27a148777114f578b36079d29688b34";
 
 // const api = import.meta.env.API_KEY;
 
 import axios from "axios";
 // game data
-const wait = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, 50);
-  });
-};
-
-// export const getGames = async () => {
-//   try {
-//     let results = [];
-//     for (let i = 0; i < 100; i++) {
-//       const start = Date.now();
-//       const { data } = await axios.get(
-//         ` https://api.rawg.io/api/games?key=${api}&page=${i + 1}`
-//       );
-//       console.log(Date.now() - start);
-//       results = [...results, ...data.results];
-//       //   await wait();
-//     }
-
-//     console.log(results);
-//     // return results;
-//   } catch (error) {
-//     console.log("error:", error);
-//   }
-// };
 
 export const getGames = async () => {
   try {
-    const { data } = await axios.get(
-      ` https://api.rawg.io/api/games?key=${api}`
-    );
-    // return data.results;
+    const cachedGames = getCachedGames();
 
-    const results = data.results.map((element, index) => ({
-      ...element,
+    if (
+      cachedGames !== null &&
+      cachedGames !== undefined &&
+      cachedGames.length > 0
+    ) {
+      console.log("Fetching games from cache...");
+      return cachedGames;
+    } else {
+      let results = [];
+      for (let i = 0; i < 2; i++) {
+        const { data } = await axios.get(
+          ` https://api.rawg.io/api/games?key=${api}&page=${i + 1}`
+        );
 
-      liked: false,
-    }));
+        results = [...results, ...data.results];
+      }
+      results = results.map((element, index) => ({
+        ...element,
 
-    return results;
+        liked: false,
+      }));
+      console.log("Fetching games from API...");
+      cacheGames(results);
+      return results;
+    }
   } catch (error) {
     console.log("error:", error);
   }
 };
+
+// export const getGames = async () => {
+//   try {
+//     const { data } = await axios.get(
+//       ` https://api.rawg.io/api/games?key=${api}`
+//     );
+//     // return data.results;
+
+//     const results = data.results.map((element, index) => ({
+//       ...element,
+
+//       liked: false,
+//     }));
+
+//     return results;
+//   } catch (error) {
+//     console.log("error:", error);
+//   }
+// };
 
 // genres
 export const getGenres = async () => {
