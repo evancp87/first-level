@@ -24,6 +24,16 @@ body {
   color: #2AA146;
 }
 
+.active-btn:active, .focus-input:focus {
+outline-style: dashed;
+outline-width: 3px;
+outline-color: rgb(166, 173, 186);
+outline-offset: 5px;
+
+}
+
+
+
 @media ( width <= 1004px) {
 .card-body {
   padding-inline: 0.2em;
@@ -43,4 +53,3 @@ body {
    
     }
 
-margin-left: 2em;
