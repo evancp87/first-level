@@ -1,75 +1,43 @@
-import { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import FilteredGameCard from "./FilteredGameCard";
+import { oneMonthAgo, oneMonthAhead, currentDate } from "../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectReset,
-  selectSort,
-  selectNewlyReleased,
-  selectUpcoming,
-  // games,
-  sort,
-  reset,
-  newlyReleased,
-  upcoming,
-  // filterHighestRated,
-} from "./dashboardSlice";
+import { selectNewReleases, setGamesByDate } from "./dashboardSlice";
 
-// TODO: make reusable and configurable
 const FilteredList = () => {
   const dispatch = useDispatch();
-  const sortValue = useSelector(selectSort);
-  const resetList = useSelector(selectReset);
-  const newReleases = useSelector(selectNewlyReleased);
-  const upcomingGames = useSelector(selectUpcoming);
+
+  const newReleases = useSelector(selectNewReleases);
+
+  const handleGetGames = useCallback(() => {
+    dispatch(
+      setGamesByDate({
+        startDate: oneMonthAgo,
+        endDate: currentDate,
+        dateType: "newlyReleased",
+      })
+    );
+  }, [dispatch, setGamesByDate]);
 
   useEffect(() => {
-    dispatch(upcoming), dispatch(newlyReleased);
-  }, [dispatch]);
-
-  console.log(upcomingGames, newReleases);
-
-  const setFilteredGames = (e) => {
-    dispatch(sort(e.target.value));
-  };
-
-  const filteredList = () => {
-    let filteredList = [...upcomingGames];
-
-    // sorting between either
-    if (sortValue && sortValue === "Upcoming Games" && sortValue.length > 0) {
-      return filteredList;
-    } else if (sortValue && sortValue === "New Releases" && sortValue.length) {
-      filteredList = [...newReleases];
-    }
-
-    return filteredList;
-  };
-
-  const filteredGames = filteredList();
-
-  // const filterOptions = [
-  //   { label: "Upcoming Games", value: "upcoming" },
-  //   { label: "New Releases", value: "new_releases" },
-  // ];
+    handleGetGames();
+  }, [handleGetGames]);
 
   return (
     <>
-      {/* <Filters options={filterOptions} onInput={setFilteredGames} /> */}
+      <h2 className="my-4">Latest Games</h2>
 
-      <select
-        onInput={setFilteredGames}
-        className="select w-[250px] max-w-xs  select-bordered select-xs  max-w-xs"
-      >
-        <option>Upcoming Games</option>
-        <option>New Releases</option>
-      </select>
-      <ul className="carousel carousel-center p-4 space-x-2 rounded-box overflow-y-hidden">
-        {filteredGames.length === 0 ? (
-          <p>No results found</p>
+      <ul className="carousel-center carousel rounded-box space-x-2 overflow-y-hidden ">
+        {newReleases && newReleases.length === 0 ? (
+          <div className="my-[5em]">
+            <p className="text-logo">
+              No newly released games available right now
+            </p>
+          </div>
         ) : (
-          filteredGames &&
-          filteredGames.map((game) => (
-            <li className="carousel-item" key={game.id}>
+          newReleases &&
+          newReleases.map((game) => (
+            <li className="carousel-item cursor-move" key={game.id}>
               <FilteredGameCard game={game} />
             </li>
           ))
