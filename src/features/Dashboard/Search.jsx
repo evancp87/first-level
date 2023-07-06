@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { validate } from "../../validation/index.js";
 import GameCard from "../Game/GameCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +39,8 @@ const Search = () => {
   const genreNames = useSelector(selectGenres);
   const platformNames = useSelector(selectPlatforms);
   const { likes, handleLikes } = useHandleLikes();
+  const inputRef = useRef(null);
+
   // const platformNames = [...games.map((game) => game.console.platform.name)];
   const getInputs = useCallback(() => {
     dispatch(setPlatforms());
@@ -51,7 +53,8 @@ const Search = () => {
 
   useEffect(() => {
     const filteredGames = filteredSearch();
-    setTotalPages(Math.ceil(filteredGames.length / 10)); // Calculate total pages
+    // Calculate total pages
+    setTotalPages(Math.ceil(filteredGames.length / 10));
     setCurrentPage(1);
   }, [searchInput, selectedPlatform, selectedGenre, sortInput]);
 
@@ -60,10 +63,12 @@ const Search = () => {
     setSelectedGenre("");
     setSelectedPlatform("");
     setSelectedSort("");
+    setSearchText("");
   };
   const resetFilters = () => {
     // to reset filteredList
     dispatch(reset());
+
     // to reset inputs
     handlePlatformResets();
   };
@@ -168,11 +173,17 @@ const Search = () => {
         selectedSort={selectedSort}
         setSelectedSort={setSelectedSort}
         searchText={searchText}
+        setSearchText={setSearchText}
+        inputRef={inputRef}
       />
 
-      <div>
+      <div className="w-full">
         <ul>
-          {filteredGames.length === 0 && <p>no results found</p>}
+          {filteredGames.length === 0 && (
+            <div className=" flex h-96 items-center justify-center">
+              <p className="text-4xl">No results found</p>
+            </div>
+          )}
 
           {filteredGames &&
             filteredGames.map((game) => (
@@ -187,14 +198,14 @@ const Search = () => {
         <div className="join my-[3em] grid grid-cols-2  pe-[1em] ps-[1em]">
           <button
             onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || filteredGames.length === 0}
             className="btn-outline join-item btn"
           >
             Previous page
           </button>
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
-            // disabled={currentPage === totalPages}
+            disabled={currentPage > totalPages || filteredGames.length === 0}
             className="btn-outline join-item btn"
           >
             Next
