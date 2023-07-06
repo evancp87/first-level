@@ -33,16 +33,17 @@ const Cart = () => {
         <div className="p-2">
           {items.map((item) => (
             <div key={item.id} className="my-4">
-              <div className="">
+              <div>
                 <div className="p-2">
                   <img
                     src={item.background_image}
                     alt="product img"
                     className="rounded-md"
                   />
-                  <div className="">
+                  <div>
                     <h3 className="my-2 text-lg">{item.name}</h3>
                     <div className="flex flex-row justify-between">
+                      {/* if you keep adding the item to the basket the quantity goes up */}
                       <p>
                         £{item.price} x {item.quantity}
                       </p>
@@ -62,6 +63,7 @@ const Cart = () => {
               </div>
             </div>
           ))}
+          {/* total amount in basket */}
           <p className="my-2 p-2">Total: £{totalAmount}</p>
           <div className="mt-2">
             <button

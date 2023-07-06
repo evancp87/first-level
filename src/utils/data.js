@@ -7,6 +7,7 @@ import axios from "axios";
 
 export const getGames = async () => {
   try {
+    // caching api call so doesn't have to be repeated if games are in cache
     const cachedGames = getCachedGames();
 
     if (
@@ -18,7 +19,8 @@ export const getGames = async () => {
       return cachedGames;
     } else {
       let results = [];
-      for (let i = 0; i < 2; i++) {
+      // ierates over paginated games data
+      for (let i = 0; i < 30; i++) {
         const { data } = await axios.get(
           ` https://api.rawg.io/api/games?key=${api}&page=${i + 1}`
         );
@@ -27,7 +29,7 @@ export const getGames = async () => {
       }
       results = results.map((element, index) => ({
         ...element,
-
+        // sets liked property on each game
         liked: false,
       }));
       console.log("Fetching games from API...");
@@ -41,17 +43,15 @@ export const getGames = async () => {
 
 export const getGamesByDate = async (startDate, endDate) => {
   try {
+    // Will take a start date and end date at point of dispatch to the store
     const { data } = await axios.get(
       `https://api.rawg.io/api/games?dates=${startDate},${endDate}&key=${api}`
     );
-
-    console.log("checking the api call here", data.results);
-
+    // gets games within date range that have rating of over 3.5. I found 4 and 4.5 too narrow
     const filteredResults = data.results.filter((game) => {
       return game.rating >= 3.5;
     });
     const results = filteredResults.slice(0, 10);
-    console.log("checking the filtered api", results);
     return results;
   } catch (error) {
     console.log("error:", error);
@@ -93,7 +93,7 @@ export const getScreenshots = async (game_pk) => {
   }
 };
 
-// Get details of the game.
+// Get details of a single game.
 
 export const getGameDetail = async (slug) => {
   try {
@@ -106,7 +106,7 @@ export const getGameDetail = async (slug) => {
   }
 };
 
-// Get a list of game trailers.
+// Get a list of game trailers. Nb only found one game so far with a trailer - GTA V
 
 export const getGameTrailers = async (slug) => {
   try {

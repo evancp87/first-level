@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import GameCard from "../Game/GameCard";
 import { useHandleLikes } from "../../utils/hooks/localStorage.jsx";
 import gsap from "gsap";
 import { Transition } from "react-transition-group";
 const Favorites = () => {
   const { likes, handleLikes } = useHandleLikes();
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  // const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // TODO: not currently working- the idea being to animate out a game card on being removed from favorites
   const onLikeExit = (node) => {
     gsap.to(node, {
       x: -100,
@@ -20,7 +21,7 @@ const Favorites = () => {
   };
 
   return (
-    <div className="h-screen">
+    <div>
       <ul>
         {(likes.length === 0 && (
           <p className="mt-8 flex items-center justify-center text-xl">
@@ -35,7 +36,6 @@ const Favorites = () => {
               key={game.id}
               timeout={200}
               in={true}
-              // onEnter={handleEnter}
               onExit={onLikeExit}
               unmountOnExit
             >

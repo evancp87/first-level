@@ -11,13 +11,13 @@ const initialState = {
   trailers: [],
 };
 
+// gets detail of a single gamee
 export const getGame = createAsyncThunk("games/getGame", async (slug) => {
   try {
     const gameDetail = await getGameDetail(slug);
 
     const price = Math.floor(Math.random() * 11) + 50;
 
-    // Add the 'price' property to the game detail
     gameDetail.price = price;
 
     return gameDetail;

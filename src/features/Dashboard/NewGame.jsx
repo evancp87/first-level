@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ const FilteredGameCard = ({ game }) => {
 
   return (
     <div className="w-full overflow-x-auto">
+      {/* links to game detail */}
       <Link to={`/game/${slug}`}>
         <div
           className="carousel-item image-full relative h-[300px] w-[200px] gap-[1em] rounded-3xl bg-base-100 shadow-xl md:w-96  "
@@ -24,9 +25,6 @@ const FilteredGameCard = ({ game }) => {
             backgroundColor: "rgb(97 97 97 / 50%)",
           }}
         >
-          {/* <figure>
-        <img src={background_image} alt={`${name} background`} />
-      </figure> */}
           <div
             className=" bg-blue-400 relative flex flex-col justify-start justify-center gap-[0.5em] ps-[1em] pt-[1em]  
           "

@@ -11,10 +11,10 @@ const AllTimeBest = () => {
   useEffect(() => {
     dispatch(filterHighestRated());
   }, [dispatch]);
-
+  // gets filtered list of highest rated games from store
   const highestRated = useSelector(selectHighestRated);
   return (
-    <div className="p-4">
+    <div className="my-8 px-4 text-xl">
       <h2 className="my-4">All Time Highest Rated</h2>
       <ul>
         {highestRated &&

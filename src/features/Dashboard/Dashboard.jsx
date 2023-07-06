@@ -1,11 +1,11 @@
 import React from "react";
 import AllTimeBest from "./AllTimeBest";
-import FilteredList from "./FilteredList";
+import NewGamesList from "./NewGamesList";
 
 const Dashboard = () => {
   return (
     <>
-      <FilteredList />
+      <NewGamesList />
       <AllTimeBest />
     </>
   );

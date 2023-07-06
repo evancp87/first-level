@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Nav from "./Nav";
 import Footer from "./Footer";
@@ -11,6 +11,7 @@ import { onPageEnter, onPageExit } from "../utils/helpers";
 const Layout = ({ children }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // gsap page transitions
   const handleEnter = (node) => {
     onPageEnter(node);
     setIsTransitioning(false);
@@ -29,8 +30,7 @@ const Layout = ({ children }) => {
       <SwitchTransition mode="out-in">
         <Transition
           key={location.pathname}
-          classNames="page"
-          // timeout={200}
+          timeout={0}
           onEnter={handleEnter}
           onExit={handleExit}
           unmountOnExit
@@ -41,6 +41,7 @@ const Layout = ({ children }) => {
           </main>
         </Transition>
       </SwitchTransition>
+
       <Footer />
     </>
   );

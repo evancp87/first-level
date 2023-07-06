@@ -17,6 +17,7 @@ const Controls = ({
   selectedSort,
   searchText,
 }) => {
+  // controlled select/search components, including desc, asc, filtering by games console, filtering by genre and filtering by search query
   return (
     <>
       <div className="flex max-w-[80vw] flex-col  items-center">

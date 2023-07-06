@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { gameLikes } from "../../features/Dashboard/dashboardSlice";
 
+// local storage custom hook
 export function useLocalStorage(key, initialState) {
   const [state, setState] = useState(() => {
     try {
@@ -13,6 +14,7 @@ export function useLocalStorage(key, initialState) {
       return initialState;
     }
   });
+  // TODO: check this is used- i think not
   const removeItem = () => {
     localStorage.removeItem(key);
   };
@@ -25,6 +27,7 @@ export function useLocalStorage(key, initialState) {
   return [state, setState, removeItem];
 }
 
+// hook for removing likes from localStorage
 export function useHandleLikes() {
   const dispatch = useDispatch();
   const [likes, setLikes] = useLocalStorage("Likes", []);

@@ -14,6 +14,7 @@ export const validate = async (payload) => {
   } catch (error) {
     console.log(error);
     if (error.details) {
+      // configures Joi's slightly unusual data structure to be more useful
       const errorsMod = error.details.map((error) => ({
         key: error.context.key,
         message: error.message,

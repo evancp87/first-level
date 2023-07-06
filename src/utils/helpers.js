@@ -21,16 +21,6 @@ export const sumItems = (items) => {
   return { itemCount, total };
 };
 
-export const calculateOverallRating = (ratingData) => {
-  let sum = 0;
-  let total = 0;
-  ratingData.ratings.forEach((rating) => {
-    sum += rating.title * rating.count;
-    total += rating.count;
-  });
-  return total > 0 ? sum / total : 0;
-};
-
 // Gsap animations
 // ============================================
 // Page transitions animations

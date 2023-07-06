@@ -4,15 +4,13 @@ import { getGames, getGamesByDate } from "../../utils/data";
 const initialState = {
   games: [],
   allTimeBest: [],
-  upcomingGames: [],
   newlyReleasedGames: [],
   sortInput: "",
   searchInput: "",
   gameLikes: [],
-  removeGameLike: {},
-  ratings: [],
 };
 
+// getting main list of games
 export const setGames = createAsyncThunk("games/setGames", async () => {
   try {
     const response = await getGames();
@@ -23,6 +21,7 @@ export const setGames = createAsyncThunk("games/setGames", async () => {
   }
 });
 
+// getting upcoming games
 export const setGamesByDate = createAsyncThunk(
   "games/setGamesDate",
   async ({ startDate, endDate }) => {
@@ -51,6 +50,7 @@ export const dashboardSlice = createSlice({
       state.sortInput = initialState.sortInput;
       state.searchInput = initialState.searchInput;
     },
+    // filters games list for highest rated games
     filterHighestRated: (state) => {
       if (state.games && state.games.length) {
         const highest = state.games.filter((game) => game.rating >= 4.5);
@@ -58,7 +58,7 @@ export const dashboardSlice = createSlice({
         state.allTimeBest = topTen;
       }
     },
-
+    // toggles liked state on game cards
     gameLikes: (state, action) => {
       const indexOfLike = state.games.findIndex(
         (game) => game.id === action.payload
@@ -73,17 +73,6 @@ export const dashboardSlice = createSlice({
       const highest = state.games.filter((game) => game.rating >= 4.5);
       const topTen = highest.slice(0, 10);
       state.allTimeBest = topTen;
-    },
-
-    rating: (state, action) => {
-      const indexOfRating = state.games.findIndex(
-        (game) => game.id === action.payload
-      );
-      const updatedRating = {
-        ...state.games[indexOfRating],
-        rated: (state.games[indexOfRating] += action.payload),
-      };
-      state.games[indexOfRating] = updatedRating;
     },
   },
   extraReducers: (builder) => {
@@ -102,13 +91,10 @@ export const {
   reset,
   search,
   newlyReleased,
-  upcoming,
   filterHighestRated,
   addToLikes,
   getLikes,
   gameLikes,
-  removeLike,
-  rating,
 } = dashboardSlice.actions;
 
 export const selectReset = (state) => state.reset;
@@ -117,10 +103,6 @@ export const selectSearch = (state) => state.dashboard.searchInput;
 export const selectHighestRated = (state) => state.dashboard.allTimeBest;
 export const selectGames = (state) => state.dashboard.games;
 export const selectLikes = (state) => state.dashboard.gameLikes;
-export const selectUpcoming = (state) => state.dashboard.upcomingGames;
 export const selectNewReleases = (state) => state.dashboard.newlyReleasedGames;
-
-export const selectRating = (state) => state.dashboard.ratings;
-export const selectRemoveLikes = (state) => state.dashboard.removeGameLikes;
 
 export default dashboardSlice.reducer;

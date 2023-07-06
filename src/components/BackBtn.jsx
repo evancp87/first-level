@@ -5,6 +5,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 const BackBtn = () => {
   const navigate = useNavigate();
   return (
+    // dynamic back button for game detail component, where game cards are in multiple places, links back to wherever navigated from
     <>
       <FontAwesomeIcon
         onClick={() => {

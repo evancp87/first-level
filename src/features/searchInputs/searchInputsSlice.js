@@ -6,6 +6,7 @@ const initialState = {
   genres: [],
 };
 
+// gets lists of genres and platforms
 export const setGenres = createAsyncThunk("inputs/getGenres", async () => {
   const response = await getGenres();
 

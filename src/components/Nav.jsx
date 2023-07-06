@@ -14,10 +14,7 @@ const Nav = () => {
   const count = useSelector(selectTotal);
 
   return (
-    <nav
-      // style={{ color: "#2AA146" }}
-      className="relative z-50 ms-[30px] flex flex-row  justify-between py-[2em]"
-    >
+    <nav className="relative z-50 ms-[30px] flex flex-row  justify-between py-[2em]">
       <div>
         <Link to="/">
           <p className="logo-green cursor-pointer font-press">First Level</p>
@@ -42,6 +39,7 @@ const Nav = () => {
         </li>
         <li>
           <div className="dropdown-end dropdown relative">
+            {/* shopping cart - includes number of items in basket- conditional */}
             {items.length > 0 && (
               <p
                 className="text-slate-100 absolute flex items-center justify-center"

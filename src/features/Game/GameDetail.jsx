@@ -13,19 +13,17 @@ import {
 import { truncateText } from "../../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import Skeleton from "react-loading-skeleton";
 import parse from "html-react-parser";
 import { addToCart } from "../cart/cartSlice";
 const GameDetail = () => {
   const [showMore, setShowMore] = useState(false);
   const gameDetailRef = useRef(null);
   const parallaxRef = useRef(null);
-
   const dispatch = useDispatch();
   const game = useSelector(selectGameDetail);
   const screenshots = useSelector(selectScreenshots);
   const trailers = useSelector(selectTrailers);
-
+  // unpacks slug from the url to dispatch the store and fetch game detail from api
   const { slug } = useParams();
 
   const fetchGame = useCallback(() => {
@@ -35,10 +33,10 @@ const GameDetail = () => {
   }, [dispatch, slug]);
 
   useEffect(() => {
-    console.log("hello!");
     fetchGame();
   }, [fetchGame]);
 
+  // parallax effect
   useEffect(() => {
     const handleScroll = () => {
       let offset = window.pageYOffset;
@@ -65,11 +63,11 @@ const GameDetail = () => {
     price,
   } = game;
 
+  // handles both adding to the cart and scroll to top
   const handleAddToCart = (game) => {
     dispatch(addToCart(game));
     gameDetailRef.current.scrollIntoView({
       behavior: "smooth",
-      // block: "start",
     });
   };
 
@@ -82,22 +80,19 @@ const GameDetail = () => {
     price,
   };
 
-  // regex handles issue with description where the description from the api contains p and br tags
-  const insertSpaces = /<p>/gi;
+  // regex handles issue with the description property being html in json format, by adding a class to the p tag so the text can be styled
+  const tidyHtml = /<p>/gi;
   const tidiedDescription = description
     ? description
-        .replaceAll(insertSpaces, "<p class='my-4'>")
+        .replaceAll(tidyHtml, "<p class='my-4'>")
         .replaceAll(/<br>/gi, "<br><br>")
     : "";
 
-  // const truncatedDescription = truncateText(description, 1000);
-
+  // truncated descriptions for long blocks of text
   const truncatedDescription = truncateText(tidiedDescription, 500);
   const isTooLong = truncatedDescription.length < tidiedDescription.length;
   const videoUrl = trailers.length > 0 && trailers[0].data[480];
   const previewUrl = trailers.length > 0 && trailers[0].preview;
-
-  // Hero image, rating, back button, sub nav- with ratings icon, bookmark, title, released, description, screenshots, tailer
 
   const platformNames =
     platforms && platforms.map((console) => console.platform.name).join(", ");
@@ -105,8 +100,6 @@ const GameDetail = () => {
   const developerNames =
     developers && developers.map((developer) => developer.name).join(", ");
   const genreNames = genres && genres.map((genre) => genre.name).join(", ");
-
-  console.log(typeof description);
 
   return (
     <section ref={gameDetailRef}>
@@ -125,8 +118,7 @@ const GameDetail = () => {
       >
         <BackBtn />
       </header>
-      {/* <BackBtn /> */}
-      {/* <img src={background_image} alt={name} /> */}
+
       <section className="flex flex-col items-center px-[3em]">
         <div className="mt-6 flex flex-col items-center gap-4 ">
           <p className="text-center text-4xl"> {name}</p>
@@ -135,7 +127,7 @@ const GameDetail = () => {
           <p>{platformNames}</p>
           <p>{genreNames}</p>
         </div>
-
+        {/* toggles between short and long copy */}
         <div className="w-full">
           {showMore ? (
             <div>{parse(tidiedDescription)}</div>
@@ -143,7 +135,7 @@ const GameDetail = () => {
             <div> {parse(truncatedDescription)}</div>
           )}
 
-          {/* </p> */}
+          {/* handles situations where the copy isn't long and truncate button not needed */}
           {isTooLong && (
             <button
               className="active-btn text-slate-100 flex h-[40px] w-[200px] items-center justify-center rounded-full
@@ -155,14 +147,6 @@ const GameDetail = () => {
           )}
           <div className="mt-6 flex flex-row flex-wrap items-center justify-between">
             <div className="mt-4 flex justify-between gap-4 ">
-              {/* <p className="flex flex-row">Price:</p>
-              <p>£{price}</p>
-              <FontAwesomeIcon
-                icon={faCartPlus}
-                size="2x"
-                className="cursor-pointer"
-                onClick={() => handleAddToCart(gameDetails)}
-              /> */}
               <button
                 className="active-btn btn flex min-w-[200px] justify-evenly rounded-full  duration-300 ease-in-out hover:scale-110"
                 onClick={() => handleAddToCart(gameDetails)}
@@ -181,6 +165,7 @@ const GameDetail = () => {
       </section>
 
       <section className="my-6 py-[2em]">
+        {/* carousel of screenshots */}
         <div className="w-full overflow-x-auto">
           <ul
             className="carousel-center carousel rounded-box  space-x-2 overflow-y-hidden p-4"

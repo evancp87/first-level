@@ -22,27 +22,28 @@ import {
 } from "../searchInputs/searchInputsSlice.js";
 
 const Search = () => {
-  // searching and filtering-
-
-  //  include num results
-  // pagination
+  // joi validation
   const [searchError, setSearchError] = useState(null);
+  // select/search state for controlled components
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
+  const searchInput = useSelector(selectSearch);
+  const sortInput = useSelector(selectSort);
+  const [selectedSort, setSelectedSort] = useState("Filter games by console");
+  const genreNames = useSelector(selectGenres);
+  const platformNames = useSelector(selectPlatforms);
+  // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const games = useSelector(selectGames);
-  const searchInput = useSelector(selectSearch);
-  const sortInput = useSelector(selectSort);
-  const genreNames = useSelector(selectGenres);
-  const platformNames = useSelector(selectPlatforms);
   const { likes, handleLikes } = useHandleLikes();
   const inputRef = useRef(null);
 
   // const platformNames = [...games.map((game) => game.console.platform.name)];
   const getInputs = useCallback(() => {
+    // fetches genres and platforms from store
     dispatch(setPlatforms());
     dispatch(setGenres());
   }, [dispatch]);
@@ -53,31 +54,31 @@ const Search = () => {
 
   useEffect(() => {
     const filteredGames = filteredSearch();
-    // Calculate total pages
+    // Calculate total pages for pagination
     setTotalPages(Math.ceil(filteredGames.length / 10));
     setCurrentPage(1);
   }, [searchInput, selectedPlatform, selectedGenre, sortInput]);
 
-  const [selectedSort, setSelectedSort] = useState("Filter games by console");
+  // resets all select/search inputs at once
   const handlePlatformResets = () => {
     setSelectedGenre("");
     setSelectedPlatform("");
     setSelectedSort("");
     setSearchText("");
   };
-  const resetFilters = () => {
-    // to reset filteredList
-    dispatch(reset());
 
+  const resetFilters = () => {
+    // to reset filteredList in store
+    dispatch(reset());
     // to reset inputs
     handlePlatformResets();
   };
 
   const searchValue = async (e) => {
-    console.log(e.target.value);
     setSearchText(e.target.value);
     const { value } = e.target;
     dispatch(search(value));
+    // joi validation
     const payload = { search: value };
     const res = await validate(payload);
 
@@ -93,6 +94,7 @@ const Search = () => {
   const filteredSearch = () => {
     let filteredList = [...games];
 
+    // defensive checks for rendering filtered list based on input
     if (searchInput) {
       console.log("is there a searchInput:", searchInput);
       filteredList = filteredList.filter((game) => {
@@ -136,16 +138,10 @@ const Search = () => {
         );
         break;
 
-      // case "Reset":
-      //   filteredList = [...games];
-      //   dispatch(reset());
-      //   dispatch(resetSelectInputs());
-      //   break;
-
       default:
         filteredList;
     }
-    // pagination
+    // pagination- working out how many results per page
 
     const startIndex = (currentPage - 1) * 10;
     const endIndex = startIndex + 10;

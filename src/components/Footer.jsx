@@ -5,7 +5,7 @@ const Footer = () => {
   const year = date.getFullYear();
 
   return (
-    <footer className="relative bottom-0  left-0 right-0 mt-4 flex h-[100px] flex-col items-center gap-4">
+    <footer className=" bottom-0  left-0 right-0 mt-4 flex h-[100px] flex-col items-center gap-4">
       <p>Made by Evan Parker in {year}</p>
       <p>
         Built using the excellent{" "}

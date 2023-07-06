@@ -1,50 +1,15 @@
 /* eslint-disable react/prop-types */
 
-import React, { useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { useLocalStorage } from "../../utils/hooks/localStorage";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useDispatch, useSelector } from "react-redux";
-
-import { gameLikes } from "../Dashboard/dashboardSlice";
 
 const GameCard = ({ game, handleLikes }) => {
-  //   if in basket show market
-  const {
-    released,
-    name,
-    background_image,
-    slug,
-    id,
-    rating,
-    platforms,
-
-    liked,
-  } = game;
-
-  // const dispatch = useDispatch();
-  // const [toggleLikes, setToggleLikes] = useLocalStorage("Likes", []);
-  // const [likes, setLikes] = useLocalStorage("Likes", []);
-
-  // const handleLikes = (id, game) => {
-  //   dispatch(gameLikes(id));
-
-  //   const { id: gameId, slug, name, released, background_image, rating } = game;
-  //   const likedGame = {
-  //     id: gameId,
-  //     slug,
-  //     name,
-  //     released,
-  //     background_image,
-  //     rating,
-  //     liked,
-  //   };
-
-  //   setLikes([...likes, likedGame]);
-  // };
+  const { released, name, background_image, slug, rating, platforms, liked } =
+    game;
 
   const platformNames =
     platforms && platforms.map((console) => console.platform.name).join(", ");
@@ -72,6 +37,7 @@ const GameCard = ({ game, handleLikes }) => {
               </p>
             </div>
             <div className="flex items-center">
+              {/* handles liked state of heart when clicked, saves to localStorage and favorites page */}
               <FontAwesomeIcon
                 className="active-btn cursor-pointer"
                 style={{
