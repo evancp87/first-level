@@ -2,8 +2,6 @@ import { getCachedGames, cacheGames } from "./helpers";
 
 const api = "b27a148777114f578b36079d29688b34";
 
-// const api = import.meta.env.API_KEY;
-
 import axios from "axios";
 // game data
 
@@ -41,24 +39,24 @@ export const getGames = async () => {
   }
 };
 
-// export const getGames = async () => {
-//   try {
-//     const { data } = await axios.get(
-//       ` https://api.rawg.io/api/games?key=${api}`
-//     );
-//     // return data.results;
+export const getGamesByDate = async (startDate, endDate) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.rawg.io/api/games?dates=${startDate},${endDate}&key=${api}`
+    );
 
-//     const results = data.results.map((element, index) => ({
-//       ...element,
+    console.log("checking the api call here", data.results);
 
-//       liked: false,
-//     }));
-
-//     return results;
-//   } catch (error) {
-//     console.log("error:", error);
-//   }
-// };
+    const filteredResults = data.results.filter((game) => {
+      return game.rating >= 3.5;
+    });
+    const results = filteredResults.slice(0, 10);
+    console.log("checking the filtered api", results);
+    return results;
+  } catch (error) {
+    console.log("error:", error);
+  }
+};
 
 // genres
 export const getGenres = async () => {
@@ -72,6 +70,7 @@ export const getGenres = async () => {
   }
 };
 
+// platform names
 export const getPlatforms = async () => {
   try {
     const { data } = await axios.get(
@@ -87,19 +86,6 @@ export const getScreenshots = async (game_pk) => {
   try {
     const { data } = await axios.get(
       `https://api.rawg.io/api/games/${game_pk}/screenshots?key=${api}`
-    );
-    return data.results;
-  } catch (error) {
-    console.log("error:", error);
-  }
-};
-
-// links to stores that sell the game
-
-export const getLinksToStores = async (game_pk) => {
-  try {
-    const { data } = await axios.get(
-      ` https://api.rawg.io/api/games/${game_pk}/stores?key=${api}`
     );
     return data.results;
   } catch (error) {
@@ -126,32 +112,6 @@ export const getGameTrailers = async (slug) => {
   try {
     const { data } = await axios.get(
       `https://api.rawg.io/api/games/${slug}/movies?key=${api}`
-    );
-    return data.results;
-  } catch (error) {
-    console.log("error:", error);
-  }
-};
-
-// favorites
-
-export const getFavorites = async () => {
-  try {
-    const { data } = await axios.get(
-      `https://api.rawg.io/api/games/{game_pk}/screenshots}`
-    );
-    return data.results;
-  } catch (error) {
-    console.log("error:", error);
-  }
-};
-
-// Ratings
-
-export const getRatings = async () => {
-  try {
-    const { data } = await axios.get(
-      `https://api.rawg.io/api/games/{game_pk}/screenshots`
     );
     return data.results;
   } catch (error) {
