@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +16,7 @@ const Nav = () => {
   return (
     <nav
       // style={{ color: "#2AA146" }}
-      className="ms-[30px] flex flex-row justify-between py-[2em] "
+      className="relative z-50 ms-[30px] flex flex-row  justify-between py-[2em]"
     >
       <div>
         <Link to="/">
@@ -25,12 +26,18 @@ const Nav = () => {
       <ul className="me-[30px] flex flex-row flex-wrap gap-x-[30px]">
         <li>
           <Link to="/">
-            <FontAwesomeIcon className="cursor-pointer" icon={faHouse} />
+            <FontAwesomeIcon
+              className="cursor-pointer duration-300 ease-in-out hover:scale-150"
+              icon={faHouse}
+            />
           </Link>
         </li>
         <li>
           <Link to="/favorites">
-            <FontAwesomeIcon className="cursor-pointer" icon={faHeart} />
+            <FontAwesomeIcon
+              className="cursor-pointer duration-300 ease-in-out hover:scale-150"
+              icon={faHeart}
+            />
           </Link>
         </li>
         <li>
@@ -54,7 +61,7 @@ const Nav = () => {
             )}
             <label tabIndex={0} className=" m-1">
               <FontAwesomeIcon
-                className="cursor-pointer"
+                className="cursor-pointer duration-300 ease-in-out hover:scale-150"
                 icon={faCartShopping}
               />
             </label>
@@ -70,7 +77,7 @@ const Nav = () => {
         <li>
           <Link to="/search">
             <FontAwesomeIcon
-              className="cursor-pointer"
+              className="cursor-pointer duration-300 ease-in-out hover:scale-150"
               icon={faMagnifyingGlass}
             />
           </Link>
