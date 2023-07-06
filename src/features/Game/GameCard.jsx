@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import React from "react";
-import { useRef } from "react";
+
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -66,12 +66,14 @@ const GameCard = ({ game, handleLikes }) => {
           <div className="card-body">
             <div className="flex flex-col gap-4 ">
               <h2 className="card-title ">{name}</h2>
-              <p>Released {released}</p>
-              <p className="text-sm">{platformNames}</p>
+              <p>{game ? `Released ${released}` : <Skeleton width={100} />}</p>
+              <p className="text-sm">
+                {game ? platformNames : <Skeleton width={100} />}
+              </p>
             </div>
             <div className="flex items-center">
               <FontAwesomeIcon
-                className="cursor-pointer"
+                className="active-btn cursor-pointer"
                 style={{
                   filter: liked
                     ? "brightness(0) saturate(100%) invert(23%) sepia(80%) saturate(6831%) hue-rotate(355deg) brightness(98%) contrast(123%)"
@@ -82,7 +84,9 @@ const GameCard = ({ game, handleLikes }) => {
                   handleLikes(game.id, game);
                 }}
               />
-              <p className="card-actions justify-end">{rating}</p>
+              <p className="card-actions justify-end">
+                {game ? `Rating: ${rating}` : <Skeleton width={100} />}{" "}
+              </p>
             </div>
           </div>
         </article>
