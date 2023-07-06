@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import PacmanLoader from "react-spinners/PacmanLoader";
-
 import "../dist/output.css";
 import { Routes, Route } from "react-router-dom";
 import Search from "./features/Dashboard/Search";
@@ -12,18 +11,10 @@ import Interface from "./components/Interface";
 import Error404 from "./components/Error404";
 import Layout from "./components/Layout";
 import "react-loading-skeleton/dist/skeleton.css";
-import {
-  sort,
-  reset,
-  newlyReleased,
-  upcoming,
-  filterHighestRated,
-  setGames,
-} from "./features/Dashboard/dashboardSlice";
+import { setGames } from "./features/Dashboard/dashboardSlice";
 
 const App = () => {
   const dispatch = useDispatch();
-  const [showSplash, setShowSplash] = useState(true);
   const [loading, setLoading] = useState(true);
   const getData = useCallback(async () => {
     setLoading(true);
