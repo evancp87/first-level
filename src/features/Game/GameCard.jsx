@@ -66,9 +66,9 @@ const GameCard = ({ game, handleLikes }) => {
           <div className="card-body">
             <div className="flex flex-col gap-4 ">
               <h2 className="card-title ">{name}</h2>
-              <p>{game ? `Released ${released}` : <Skeleton width={100} />}</p>
+              <p>{game ? `Released ${released}` : <Skeleton count={1} />}</p>
               <p className="text-sm">
-                {game ? platformNames : <Skeleton width={100} />}
+                {game ? platformNames : <Skeleton count={1} />}
               </p>
             </div>
             <div className="flex items-center">
@@ -85,7 +85,7 @@ const GameCard = ({ game, handleLikes }) => {
                 }}
               />
               <p className="card-actions justify-end">
-                {game ? `Rating: ${rating}` : <Skeleton width={100} />}{" "}
+                {game ? `Rating: ${rating}` : <Skeleton count={1} />}{" "}
               </p>
             </div>
           </div>
