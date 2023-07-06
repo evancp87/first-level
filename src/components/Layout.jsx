@@ -1,6 +1,9 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
+/* eslint-disable react/react-in-jsx-scope */
+import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Nav from "./Nav";
+import Footer from "./Footer";
 
 import { Transition, SwitchTransition } from "react-transition-group";
 import { onPageEnter, onPageExit } from "../utils/helpers";
@@ -38,6 +41,7 @@ const Layout = ({ children }) => {
           </main>
         </Transition>
       </SwitchTransition>
+      <Footer />
     </>
   );
 };
