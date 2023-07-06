@@ -28,7 +28,6 @@ export function useLocalStorage(key, initialState) {
 export function useHandleLikes() {
   const dispatch = useDispatch();
   const [likes, setLikes] = useLocalStorage("Likes", []);
-
   const handleLikes = (id, game) => {
     dispatch(gameLikes(id));
 
@@ -40,6 +39,7 @@ export function useHandleLikes() {
       const updatedLikes = [...likes];
       updatedLikes.splice(likedGameIndex, 1);
       setLikes(updatedLikes);
+
       localStorage.setItem("Likes", JSON.stringify(updatedLikes));
     } else {
       const {
@@ -60,7 +60,6 @@ export function useHandleLikes() {
         rating,
         liked: !liked,
       };
-
       setLikes([...likes, likedGame]);
       localStorage.setItem("Likes", JSON.stringify([...likes, likedGame]));
     }
