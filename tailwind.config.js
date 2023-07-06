@@ -46,7 +46,7 @@ export default {
       pattern: /(bg|text|border)-logo/,
     },
     {
-      pattern: /(mt|mb|mr|ml|my|mx|px|py|pt|pb|pl|pr)-[0-9]+/,
+      pattern: /(mt|mb|mr|ml|my|mx|px|py|pt|pb|pl|pr|h)-[0-9]+/,
     },
   ],
 };
