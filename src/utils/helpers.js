@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import dayjs from "dayjs";
 // For truncating strings where needed
 export const truncateText = (str, num) => {
   if (str.length <= num) {
@@ -77,3 +78,9 @@ export const getCachedGames = () => {
 export const cacheGames = (data) => {
   storeCache("cachedGames", data);
 };
+
+//  dates
+
+export const currentDate = dayjs().format("YYYY-MM-DD");
+export const oneMonthAgo = dayjs().subtract(1, "month").format("YYYY-MM-DD");
+export const oneMonthAhead = dayjs().add(1, "month").format("YYYY-MM-DD");
