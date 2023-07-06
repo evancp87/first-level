@@ -4,13 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { selectItems, selectCount, removeFromCart, clear } from "./cartSlice";
 
-// import { useLocalStorage } from "../../utils/hooks/localStorage";
-
 const Cart = () => {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
   const totalAmount = useSelector(selectCount);
-
   // handles interactions in cart with items
   const handleRemoveItem = (payload) => {
     dispatch(removeFromCart(payload));
@@ -68,13 +65,13 @@ const Cart = () => {
           <p className="my-2 p-2">Total: £{totalAmount}</p>
           <div className="mt-2">
             <button
-              className="text-slate-100 mx-2 w-[30%] rounded-full bg-logo p-2 "
+              className="active-btn text-slate-100 mx-2 w-[30%] rounded-full bg-logo p-2 duration-300 ease-in-out hover:scale-110"
               onClick={handleClearCart}
             >
               Clear
             </button>
             <button
-              className="text-slate-100 mx-2 w-[30%] rounded-full bg-logo p-2"
+              className="active-btn text-slate-100 mx-2 w-[30%] rounded-full bg-logo p-2 duration-300 ease-in-out hover:scale-110"
               onClick={handleCheckout}
             >
               Checkout
