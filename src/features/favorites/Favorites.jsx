@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import GameCard from "../Game/GameCard";
-import { useHandleLikes } from "../../utils/hooks/localStorage.jsx";
+// import { useHandleLikes } from "../../utils/hooks/localStorage.jsx";
 import gsap from "gsap";
 import { Transition } from "react-transition-group";
-const Favorites = () => {
-  const { likes, handleLikes } = useHandleLikes();
+const Favorites = ({ likes, handleLikes }) => {
   // const [isTransitioning, setIsTransitioning] = useState(false);
 
   // TODO: not currently working- the idea being to animate out a game card on being removed from favorites

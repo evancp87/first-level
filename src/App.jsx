@@ -40,7 +40,10 @@ const App = () => {
         <>
           <Layout>
             <Routes>
-              <Route index element={<Dashboard handleLikes={handleLikes} />} />
+              <Route
+                index
+                element={<Dashboard handleLikes={handleLikes} likes={likes} />}
+              />
               <Route
                 path="/search"
                 element={<Search handleLikes={handleLikes} />}
