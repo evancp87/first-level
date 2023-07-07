@@ -1,12 +1,11 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
 import GameCard from "../Game/GameCard";
 import { useSelector, useDispatch } from "react-redux";
 import { selectHighestRated, filterHighestRated } from "./dashboardSlice";
-import { useHandleLikes } from "../../utils/hooks/localStorage";
 
-const AllTimeBest = () => {
+const AllTimeBest = ({ handleLikes }) => {
   const dispatch = useDispatch();
-  const { likes, handleLikes } = useHandleLikes();
 
   useEffect(() => {
     dispatch(filterHighestRated());

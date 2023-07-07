@@ -3,7 +3,6 @@ import { validate } from "../../validation/index.js";
 import GameCard from "../Game/GameCard";
 import { useDispatch, useSelector } from "react-redux";
 import Controls from "./Controls.jsx";
-import { useHandleLikes } from "../../utils/hooks/localStorage.jsx";
 
 import {
   selectSort,
@@ -21,7 +20,8 @@ import {
   setGenres,
 } from "../searchInputs/searchInputsSlice.js";
 
-const Search = () => {
+// eslint-disable-next-line react/prop-types
+const Search = ({ handleLikes }) => {
   // joi validation
   const [searchError, setSearchError] = useState(null);
   // select/search state for controlled components
@@ -38,7 +38,7 @@ const Search = () => {
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const games = useSelector(selectGames);
-  const { likes, handleLikes } = useHandleLikes();
+  // const { likes, handleLikes } = useHandleLikes();
   const inputRef = useRef(null);
 
   // const platformNames = [...games.map((game) => game.console.platform.name)];
