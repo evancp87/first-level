@@ -26,6 +26,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
+      {/* <div className="relative " style={{ height: "100%" }}> */}
       <Nav />
       <SwitchTransition mode="out-in">
         <Transition
@@ -35,7 +36,7 @@ const Layout = ({ children }) => {
           onExit={handleExit}
           unmountOnExit
         >
-          <main className="flex flex-col">
+          <main className=" flex flex-col pb-[2.5em] ">
             <Outlet />
             {children}
           </main>
@@ -43,6 +44,7 @@ const Layout = ({ children }) => {
       </SwitchTransition>
 
       <Footer />
+      {/* </div> */}
     </>
   );
 };
