@@ -11,10 +11,12 @@ import Error404 from "./components/Error404";
 import Layout from "./components/Layout";
 import "react-loading-skeleton/dist/skeleton.css";
 import { setGames } from "./features/Dashboard/dashboardSlice";
+import { useHandleLikes } from "./utils/hooks/localStorage";
 
 const App = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const { likes, handleLikes } = useHandleLikes();
   // gets data and renders loading screen with state variable
   const getData = useCallback(async () => {
     setLoading(true);
@@ -38,9 +40,15 @@ const App = () => {
         <>
           <Layout>
             <Routes>
-              <Route index element={<Dashboard />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/favorites" element={<Favorites />} />
+              <Route index element={<Dashboard handleLikes={handleLikes} />} />
+              <Route
+                path="/search"
+                element={<Search handleLikes={handleLikes} />}
+              />
+              <Route
+                path="/favorites"
+                element={<Favorites handLeLikes={handleLikes} likes={likes} />}
+              />
               <Route path="/game/:slug" element={<GameDetail />} />
               <Route path="*" element={<Error404 />} />
             </Routes>

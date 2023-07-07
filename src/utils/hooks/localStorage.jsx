@@ -14,22 +14,19 @@ export function useLocalStorage(key, initialState) {
       return initialState;
     }
   });
-  // TODO: check this is used- i think not
-  const removeItem = () => {
-    localStorage.removeItem(key);
-  };
 
   useEffect(() => {
     console.log(key, state);
     localStorage.setItem(key, JSON.stringify(state));
   }, [state, key]);
 
-  return [state, setState, removeItem];
+  return [state, setState];
 }
 
 // hook for removing likes from localStorage
 export function useHandleLikes() {
   const dispatch = useDispatch();
+  let updatedLikes;
   const [likes, setLikes] = useLocalStorage("Likes", []);
   const handleLikes = (id, game) => {
     dispatch(gameLikes(id));
@@ -39,7 +36,7 @@ export function useHandleLikes() {
 
     // checks if likedGame is in the localStorage array and if it is splices it out and updates, otherwise adds the game to local storage
     if (likedGameIndex !== -1) {
-      const updatedLikes = [...likes];
+      updatedLikes = [...likes];
       updatedLikes.splice(likedGameIndex, 1);
       setLikes(updatedLikes);
 
@@ -64,6 +61,7 @@ export function useHandleLikes() {
         liked: !liked,
       };
       setLikes([...likes, likedGame]);
+
       localStorage.setItem("Likes", JSON.stringify([...likes, likedGame]));
     }
   };
