@@ -20,7 +20,7 @@ export const getGames = async () => {
     } else {
       let results = [];
       // ierates over paginated games data
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 10; i++) {
         const { data } = await axios.get(
           ` https://api.rawg.io/api/games?key=${api}&page=${i + 1}`
         );
