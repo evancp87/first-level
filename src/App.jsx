@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import PacmanLoader from "react-spinners/PacmanLoader";
-import "../dist/output.css";
+// import "../dist/output.css";
 import { Routes, Route } from "react-router-dom";
 import Search from "./features/Dashboard/Search";
 import Dashboard from "./features/Dashboard/Dashboard";
-import Favorites from "./features/Favorites/Favorites";
+import Favorites from "./features/favorites/Favorites";
 import GameDetail from "./features/Game/GameDetail";
 import Error404 from "./components/Error404";
 import Layout from "./components/Layout";
