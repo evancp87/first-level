@@ -1,5 +1,5 @@
 import { getCachedGames, cacheGames } from "./helpers";
-
+import { isGameLiked } from "./helpers";
 const api = "b27a148777114f578b36079d29688b34";
 
 import axios from "axios";
@@ -16,7 +16,12 @@ export const getGames = async () => {
       cachedGames.length > 0
     ) {
       console.log("Fetching games from cache...");
-      return cachedGames;
+      let results = cachedGames.map((game) => ({
+        ...game,
+        // sets liked property on each game if found in localStorage, otherwise false
+        liked: isGameLiked(game.id) ? true : false,
+      }));
+      return results;
     } else {
       let results = [];
       // ierates over paginated games data
