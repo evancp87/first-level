@@ -20,8 +20,7 @@ import {
   setGenres,
 } from "../searchInputs/searchInputsSlice.js";
 
-// eslint-disable-next-line react/prop-types
-const Search = ({ handleLikes }) => {
+const Search = () => {
   // joi validation
   const [searchError, setSearchError] = useState(null);
   // select/search state for controlled components
@@ -38,7 +37,6 @@ const Search = ({ handleLikes }) => {
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const games = useSelector(selectGames);
-  // const { likes, handleLikes } = useHandleLikes();
   const inputRef = useRef(null);
 
   // const platformNames = [...games.map((game) => game.console.platform.name)];
@@ -53,9 +51,15 @@ const Search = ({ handleLikes }) => {
   }, [getInputs]);
 
   useEffect(() => {
-    const filteredGames = filteredSearch();
+    // const filteredGames = filteredSearch();
+    const { totalFilteredGames } = filteredSearch();
+
     // Calculate total pages for pagination
-    setTotalPages(Math.ceil(filteredGames.length / 10));
+    const totalPages = Math.ceil(totalFilteredGames / 10);
+    setTotalPages(totalPages);
+    setCurrentPage(1);
+    // setTotalPages(Math.ceil(filteredGames.length / 10));
+
     setCurrentPage(1);
   }, [searchInput, selectedPlatform, selectedGenre, sortInput]);
 
@@ -86,7 +90,6 @@ const Search = ({ handleLikes }) => {
   };
 
   const sortValue = (e) => {
-    console.log(e.target.value);
     dispatch(sort(e.target.value));
     setSelectedSort(e.target.value);
   };
@@ -96,7 +99,6 @@ const Search = ({ handleLikes }) => {
 
     // defensive checks for rendering filtered list based on input
     if (searchInput) {
-      console.log("is there a searchInput:", searchInput);
       filteredList = filteredList.filter((game) => {
         const gameQuery = game.name
           .toLowerCase()
@@ -104,8 +106,10 @@ const Search = ({ handleLikes }) => {
         const genreQuery = game.genres.some((genre) =>
           genre.name.toLowerCase().includes(searchInput.toLowerCase())
         );
-        const platformQuery = game.platforms.some((item) =>
-          item.platform.name.toLowerCase().includes(searchInput.toLowerCase())
+        const platformQuery = game.platforms.some((platform) =>
+          platform.platform.name
+            .toLowerCase()
+            .includes(searchInput.toLowerCase())
         );
 
         return gameQuery || genreQuery || platformQuery;
@@ -114,7 +118,9 @@ const Search = ({ handleLikes }) => {
 
     if (selectedPlatform) {
       filteredList = filteredList.filter((game) =>
-        game.platforms.some((item) => item.platform.name === selectedPlatform)
+        game.platforms.some(
+          (platform) => platform.platform.name === selectedPlatform
+        )
       );
     }
 
@@ -126,15 +132,15 @@ const Search = ({ handleLikes }) => {
 
     // sorting alphabetically ascending or descending
     switch (sortInput) {
-      case "Asc":
-        filteredList.sort((numOne, numTwo) =>
-          numOne.name > numTwo.name ? 1 : -1
-        );
-        break;
-
       case "Desc":
         filteredList.sort((numOne, numTwo) =>
           numOne.name > numTwo.name ? -1 : 1
+        );
+        break;
+
+      case "Asc":
+        filteredList.sort((numOne, numTwo) =>
+          numOne.name > numTwo.name ? 1 : -1
         );
         break;
 
@@ -147,11 +153,18 @@ const Search = ({ handleLikes }) => {
     const endIndex = startIndex + 10;
     const paginatedGames = filteredList.slice(startIndex, endIndex);
 
-    return paginatedGames;
-    // return filteredList;
-  };
+    // returns paginatedGames for pagination and filteredList for calculating total pages;
 
-  const filteredGames = filteredSearch();
+    return {
+      paginatedGames,
+      totalFilteredGames: filteredList.length,
+    };
+  };
+  // const filteredGames = filteredSearch();
+  const { paginatedGames } = filteredSearch();
+
+  const filteredGames = paginatedGames;
+
   return (
     <section className="flex flex-col items-center">
       {/* <input type="text" onInput={searchValue} /> */}
@@ -183,12 +196,7 @@ const Search = ({ handleLikes }) => {
 
           {filteredGames &&
             filteredGames.map((game) => (
-              <GameCard
-                key={game.id}
-                game={game}
-                liked={game.liked}
-                handleLikes={handleLikes}
-              />
+              <GameCard key={game.id} game={game} liked={game.liked} />
             ))}
         </ul>
         <div className="join my-[3em] grid grid-cols-2  pe-[1em] ps-[1em]">
@@ -201,7 +209,7 @@ const Search = ({ handleLikes }) => {
           </button>
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage > totalPages || filteredGames.length === 0}
+            disabled={currentPage === totalPages || filteredGames.length === 0}
             className="btn-outline join-item btn"
           >
             Next
