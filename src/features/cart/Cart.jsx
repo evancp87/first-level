@@ -24,7 +24,7 @@ const Cart = () => {
 
   return (
     // if there are items loop over and show details, including price and total
-    <div className="">
+    <div className="overflow-cart max-h-96">
       {items.length === 0 ? (
         <p className="flex justify-center" style={{ padding: "3em" }}>
           Your cart is empty
