@@ -17,7 +17,7 @@ const GameCard = ({ game, handleLikes }) => {
   return (
     <>
       <SkeletonTheme color="#f3f3f3" highlightColor="#e0e0e0">
-        <article className="mx-w-full card-bordered card card-side m-6 flex-row flex-wrap items-center bg-base-100 shadow-xl">
+        <article className="mx-w-full card-bg card-bordered card card-side m-6 flex-row flex-wrap items-center shadow-xl">
           <picture className="rounded-sm sm:max-w-[100%] lg:max-w-[20%]">
             <Link to={`/game/${slug}`}>
               {background_image ? (
