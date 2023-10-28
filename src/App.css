@@ -17,6 +17,7 @@
 
 body {
   background-color: #0d202c;
+  color: #ffffff;
   min-height: 100vh;
   position: relative;
   padding-bottom: 2.5em;
@@ -26,6 +27,10 @@ body {
   color: #2AA146;
 }
 
+.card-bg {
+  background-color:  #4F5A67;
+} 
+
 .active-btn:active, .focus-input:focus {
 outline-style: dashed;
 outline-width: 3px;
@@ -34,7 +39,9 @@ outline-offset: 5px;
 
 }
 
-
+.overflow-cart {
+  overflow-y: scroll;
+}
 
 @media ( width <= 1004px) {
 .card-body {
