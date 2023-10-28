@@ -26,7 +26,7 @@ const Controls = ({
             onInput={sortValue}
             value={selectedSort}
             onChange={(e) => setSelectedSort(e.target.value)}
-            className="max-w-xs max-w-xs select-bordered  select select-xs my-[1.5em] w-[250px]"
+            className="max-w-xs max-w-xs card-bg  select-bordered select select-xs my-[1.5em] w-[250px]"
           >
             <option disabled>Sort A - Z</option>
             <option value="Asc">Asc</option>
@@ -36,7 +36,7 @@ const Controls = ({
             name="platform"
             value={selectedPlatform}
             onChange={(e) => setSelectedPlatform(e.target.value)}
-            className="max-w-xs max-w-xs select-bordered  select select-xs my-[1.5em] w-[250px]"
+            className="max-w-xs max-w-xs card-bg  select-bordered select select-xs my-[1.5em] w-[250px]"
           >
             <option disabled>Filter games by console</option>
             {platformNames &&
@@ -50,7 +50,7 @@ const Controls = ({
             name="genre"
             value={selectedGenre}
             onChange={(e) => setSelectedGenre(e.target.value)}
-            className="max-w-xs max-w-xs select-bordered  select select-xs my-[1.5em] w-[250px]"
+            className="max-w-xs max-w-xs card-bg  select-bordered select select-xs my-[1.5em] w-[250px]"
           >
             <option disabled>Filter games by genre</option>
             {genreNames &&
@@ -70,7 +70,7 @@ const Controls = ({
             value={searchText}
             type="text"
             placeholder="Search for games by title, genre or platform"
-            className="focus-input max-w-xs input-bordered input my-[1.5em] w-full"
+            className="focus-input max-w-xs card-bg input-bordered input my-[1.5em] w-full"
           />
           <ul>
             {searchError &&
