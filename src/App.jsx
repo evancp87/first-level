@@ -50,7 +50,7 @@ const App = () => {
               />
               <Route
                 path="/favorites"
-                element={<Favorites handLeLikes={handleLikes} likes={likes} />}
+                element={<Favorites handleLikes={handleLikes} likes={likes} />}
               />
               <Route path="/game/:slug" element={<GameDetail />} />
               <Route path="*" element={<Error404 />} />
